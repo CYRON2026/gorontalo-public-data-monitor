@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gorontalo Public Data Monitor</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIINfQ3jB9QkP6V1Q0tG0G2Q8X9uQ5x0uQ8=" crossorigin=""/>
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="eyebrow">PUBLIC DATA MONITOR</div>
+    <h1>Gorontalo Public Data Monitor</h1>
+    <p>Dashboard eksplorasi data publik: anggaran, pengadaan, wilayah, dan pemeriksaan anomali.</p>
+  </div>
+  <div class="status"><span></span> Prototype • data contoh</div>
+</header>
+
+<main class="container">
+  <section class="filters card">
+    <label>Tahun<select id="yearFilter"><option>2026</option><option>2025</option><option>2024</option></select></label>
+    <label>Level wilayah<select id="levelFilter">
+      <option value="province">Provinsi</option>
+      <option value="kabupaten">Kabupaten/Kota</option>
+      <option value="kecamatan">Kecamatan</option>
+      <option value="desa">Desa/Kelurahan</option>
+    </select></label>
+    <label>Wilayah<select id="regionFilter"><option value="all">Semua wilayah</option></select></label>
+    <label>Pencarian<input id="searchBox" placeholder="Cari paket, instansi, vendor..."></label>
+  </section>
+
+  <section class="notice">
+    <strong>Catatan:</strong> angka pada prototype ini adalah data contoh. Sistem produksi harus menampilkan sumber asli, tanggal data, metode pengolahan, dan tautan dokumen publik.
+  </section>
+
+  <section class="kpis">
+    <div class="kpi card"><span>Total APBD</span><b id="kpiBudget">Rp0</b><small>data terpilih</small></div>
+    <div class="kpi card"><span>Realisasi</span><b id="kpiRealization">Rp0</b><small id="kpiRealizationPct">0%</small></div>
+    <div class="kpi card"><span>Paket Pengadaan</span><b id="kpiPackages">0</b><small>contoh terindeks</small></div>
+    <div class="kpi card"><span>Perlu Ditinjau</span><b id="kpiFlags">0</b><small>indikasi anomali, bukan kesimpulan pelanggaran</small></div>
+  </section>
+
+  <section class="grid">
+    <div class="card map-card">
+      <div class="section-head"><div><h2>Peta Wilayah</h2><p>Klik marker untuk melihat ringkasan.</p></div></div>
+      <div id="map"></div>
+    </div>
+    <div class="card">
+      <div class="section-head"><div><h2>Status Analisis</h2><p>Rule-based prototype.</p></div></div>
+      <div class="legend">
+        <div><i class="dot normal"></i><span>Normal</span><b id="normalCount">0</b></div>
+        <div><i class="dot review"></i><span>Perlu ditinjau</span><b id="reviewCount">0</b></div>
+        <div><i class="dot anomaly"></i><span>Anomali harga</span><b id="anomalyCount">0</b></div>
+        <div><i class="dot unknown"></i><span>Tidak cukup data</span><b id="unknownCount">0</b></div>
+      </div>
+      <div class="mini-note">Status dibuat dari aturan contoh. Pada versi produksi, benchmark harga harus mempertimbangkan spesifikasi, tanggal, pajak, lokasi, volume, dan sumber harga.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="section-head">
+      <div><h2>Indeks Pengadaan</h2><p>Contoh tabel yang nantinya diisi dari data publik.</p></div>
+      <button id="resetBtn">Reset filter</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Paket</th><th>Instansi</th><th>Wilayah</th><th>Nilai</th><th>Benchmark</th><th>Deviasi</th><th>Status</th></tr></thead>
+        <tbody id="procurementBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card sources">
+    <div class="section-head"><div><h2>Sumber Data</h2><p>Portal publik yang menjadi target integrasi.</p></div></div>
+    <div class="source-grid">
+      <a href="https://opendata.gorontaloprov.go.id/" target="_blank" rel="noopener"><b>Open Data Gorontalo</b><span>Dataset pemerintah daerah</span></a>
+      <a href="https://djpk.kemenkeu.go.id/portal/data/apbd" target="_blank" rel="noopener"><b>DJPK / SIKD APBD</b><span>Data APBD dan realisasi</span></a>
+      <a href="https://ptpep.lkpp.go.id/laporan/dashboard-klpd" target="_blank" rel="noopener"><b>LKPP</b><span>Informasi pengadaan</span></a>
+      <a href="https://peraturan.bpk.go.id/" target="_blank" rel="noopener"><b>JDIH BPK</b><span>Regulasi dan dokumen hukum</span></a>
+    </div>
+  </section>
+
+  <footer>
+    Gorontalo Public Data Monitor • Open/public data research prototype • Tidak berafiliasi dengan pemerintah daerah.
+  </footer>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="app.js"></script>
+</body>
+</html>
