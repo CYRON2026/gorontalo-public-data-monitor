@@ -1,44 +1,44 @@
 [
   {
-    "id": "open-data",
-    "name": "Open Data Gorontalo",
-    "url": "https://opendata.gorontaloprov.go.id/dataset",
-    "role": "Dataset sektoral pemerintah daerah",
-    "status": "verified"
-  },
-  {
     "id": "djpk-apbd",
     "name": "DJPK / SIKD APBD",
     "url": "https://djpk.kemenkeu.go.id/portal/data/apbd",
-    "role": "APBD dan realisasi",
-    "status": "verified"
+    "type": "official fiscal data"
   },
   {
     "id": "djpk-tkdd",
     "name": "DJPK / SIKD TKDD",
     "url": "https://djpk.kemenkeu.go.id/portal/data/tkdd",
-    "role": "Transfer ke daerah per kabupaten/kota",
-    "status": "verified"
+    "type": "official transfer data"
+  },
+  {
+    "id": "open-data",
+    "name": "Open Data Gorontalo",
+    "url": "https://opendata.gorontaloprov.go.id/",
+    "type": "official open-data portal"
   },
   {
     "id": "lkpp",
-    "name": "LKPP PTPEP",
+    "name": "LKPP / PTPEP",
     "url": "https://ptpep.lkpp.go.id/laporan/dashboard-klpd",
-    "role": "Kinerja pengadaan; sumber SiRUP dan SPSE",
-    "status": "verified"
+    "type": "official procurement source"
   },
   {
     "id": "bps",
     "name": "BPS Provinsi Gorontalo",
     "url": "https://gorontalo.bps.go.id/",
-    "role": "Referensi statistik dan wilayah",
-    "status": "verified"
+    "type": "official statistics"
   },
   {
-    "id": "bps-master-desa",
-    "name": "BPS Master File Desa 2025",
-    "url": "https://gorontalo.bps.go.id/id/publication/2026/03/31/fff77cc651cc3a5df7ba7dbd/master-file-desa-provinsi-gorontalo-2025.html",
-    "role": "Nama wilayah desa/UPT menurut kecamatan dan kabupaten",
-    "status": "verified"
+    "id": "bpk-jdih",
+    "name": "JDIH BPK",
+    "url": "https://peraturan.bpk.go.id/",
+    "type": "official legal database"
+  },
+  {
+    "id": "jdih-gorontalo",
+    "name": "JDIH Provinsi Gorontalo",
+    "url": "https://jdih.gorontaloprov.go.id/",
+    "type": "official regional legal database"
   }
 ]
