@@ -1,81 +1,79 @@
-let DATA=null, map=null, markers=[];
-const fmt = n => new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n*1000000);
-const pct = (a,b) => b ? ((a/b)*100).toFixed(2)+"%" : "—";
+let DATA=null,map=null,markers=[];
+const moneyM=n=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n*1000000);
+const moneyB=n=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n*1000000000);
+const pct=(a,b)=>b?((a/b)*100).toFixed(2)+"%":"—";
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 async function load(){
-  const r=await fetch("./data/v2-data.json",{cache:"no-store"});
-  DATA=await r.json();
-  buildFilters(); initMap(); render();
+ try{
+  const r=await fetch("./data/v2.1-data.json",{cache:"no-store"}); if(!r.ok) throw new Error("HTTP "+r.status);
+  DATA=await r.json(); buildFilters(); initMap(); bind(); render(); renderSources(); renderCoverage();
+ }catch(e){document.querySelector("main").innerHTML='<section class="card error"><h2>Data gagal dimuat</h2><p>'+esc(e.message)+'</p><p>Pastikan <code>data/v2.1-data.json</code> sudah di-upload.</p></section>'}
 }
-function buildFilters(){
-  const sel=document.querySelector("#region");
-  sel.innerHTML='<option value="all">Semua wilayah</option>'+DATA.regions.map(r=>`<option value="${r.id}">${r.name}</option>`).join("");
+function buildFilters(){const s=document.querySelector("#region");s.innerHTML='<option value="all">Semua wilayah</option>'+DATA.regions.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")}
+function initMap(){map=L.map("map").setView([0.62,122.65],8);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap contributors"}).addTo(map);setTimeout(()=>map.invalidateSize(true),200)}
+function bind(){
+ ["year","focus","region","search"].forEach(id=>document.querySelector("#"+id).addEventListener(id==="search"?"input":"change",render));
+ document.querySelector("#reset").onclick=()=>{year.value="2026";focus.value="apbd";region.value="all";search.value="";render()};
+ document.querySelector("#download").onclick=()=>{const b=new Blob([JSON.stringify(DATA,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="gorontalo-public-data-monitor-v2.1-2026-snapshot.json";a.click();URL.revokeObjectURL(a.href)}
 }
-function initMap(){
-  map=L.map("map",{zoomControl:true}).setView([0.62,122.65],8);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap contributors"}).addTo(map);
-  setTimeout(()=>map.invalidateSize(true),200);
-  window.addEventListener("resize",()=>map.invalidateSize(true));
+function setKpis(){
+ const p=DATA.province.apbd_history["2026"], l=p.latest_change, y25=DATA.province.apbd_history["2025"].summary, t=DATA.province.tkdd_2024, a=DATA.aggregates.six_district_city_total_tkdd_2024;
+ kpiRevenue.textContent=moneyB(p.initial.pendapatan.total/1e9);
+ kpiExpense.textContent=moneyB(p.initial.belanja.total/1e9);
+ kpiExpenseChange.textContent=moneyB(l.belanja);
+ kpi2025Real.textContent=moneyB(y25.belanja_realization_billion);
+ kpi2025Pct.textContent=y25.belanja_realization_pct+"% dari anggaran Rp"+y25.belanja_budget_billion.toLocaleString("id-ID")+" M";
+ kpiTkdd.textContent=moneyM(a.realization_million);
+ kpiTkddPct.textContent=a.realization_pct+"% dari anggaran "+moneyM(a.budget_million);
+ kpiProvTkdd.textContent=moneyM(t.realization_million);
+ kpiProvTkddPct.textContent=t.realization_pct+"% dari anggaran "+moneyM(t.budget_million);
+ kpiDatasets.textContent=DATA.open_data.catalog.province_datasets+"+";
 }
 function render(){
-  const year=+document.querySelector("#year").value;
-  const level=document.querySelector("#level").value;
-  const region=document.querySelector("#region").value;
-  const q=document.querySelector("#search").value.trim().toLowerCase();
-  const rows=DATA.regions.filter(r=>{
-    if(level==="province") return false;
-    if(region!=="all" && r.id!==region) return false;
-    return !q || r.name.toLowerCase().includes(q);
-  });
-  const all=DATA.regions;
-  const budget=all.reduce((s,r)=>s+r.budget_million,0);
-  const real=all.reduce((s,r)=>s+r.realization_million,0);
-  document.querySelector("#kpiBudget").textContent=fmt(budget);
-  document.querySelector("#kpiReal").textContent=fmt(real);
-  document.querySelector("#kpiPct").textContent=pct(real,budget)+" terealisasi";
-  document.querySelector("#kpiDatasets").textContent=DATA.province.open_data_portal.datasets_landing;
-  document.querySelector("#kpiSources").textContent=6;
-
-  if(level==="province"){
-    document.querySelector("#regionSummary").innerHTML=`
-      <div class="summary-row"><span>Wilayah</span><strong>Provinsi Gorontalo</strong></div>
-      <div class="summary-row"><span>APBD tahun snapshot</span><strong>${DATA.province.apbd.year}</strong></div>
-      <div class="summary-row"><span>APBD anggaran</span><strong>${fmt(DATA.province.apbd.budget_million)}</strong></div>
-      <div class="summary-row"><span>APBD realisasi</span><strong>${fmt(DATA.province.apbd.realization_million)}</strong></div>
-      <div class="summary-row"><span>Persentase</span><strong>${DATA.province.apbd.realization_pct}%</strong></div>
-      <div class="summary-row"><span>Catatan</span><strong style="max-width:260px">Snapshot APBD 2022; jangan diperlakukan sebagai angka APBD 2026.</strong></div>`;
-  }else{
-    const r=region==="all"?null:DATA.regions.find(x=>x.id===region);
-    document.querySelector("#regionSummary").innerHTML=r?`
-      <div class="summary-row"><span>Wilayah</span><strong>${r.name}</strong></div>
-      <div class="summary-row"><span>Periode</span><strong>${r.period}</strong></div>
-      <div class="summary-row"><span>TKDD anggaran</span><strong>${fmt(r.budget_million)}</strong></div>
-      <div class="summary-row"><span>TKDD realisasi</span><strong>${fmt(r.realization_million)}</strong></div>
-      <div class="summary-row"><span>Persentase</span><strong>${r.realization_pct}%</strong></div>
-      <div class="summary-row"><span>Sumber</span><strong>DJPK/SIKD</strong></div>`:
-      `<div class="summary-row"><span>Mode</span><strong>Semua Kabupaten/Kota</strong></div><div class="summary-row"><span>Total anggaran</span><strong>${fmt(budget)}</strong></div><div class="summary-row"><span>Total realisasi</span><strong>${fmt(real)}</strong></div><div class="summary-row"><span>Persentase agregat</span><strong>${pct(real,budget)}</strong></div>`;
-  }
-
-  const tableRows=rows.length?rows:all.filter(r=>!q||r.name.toLowerCase().includes(q));
-  document.querySelector("#districtBody").innerHTML=tableRows.map(r=>`<tr><td><b>${r.name}</b><br><small>${r.id}</small></td><td>${fmt(r.budget_million)}</td><td>${fmt(r.realization_million)}</td><td>${r.realization_pct}%</td><td><a class="source-link" style="margin:0" target="_blank" rel="noopener" href="${r.source}">DJPK ↗</a></td></tr>`).join("");
-
-  const pad=DATA.open_data_preview;
-  document.querySelector("#padMeta").innerHTML=`<b>${pad.title}</b><br>Owner: ${pad.owner} · Update: ${pad.last_updated} · Kedalaman: ${pad.depth} · ${pad.rows_total} baris total (10 preview disimpan).`;
-  document.querySelector("#padBody").innerHTML=pad.rows_preview.map(x=>`<tr><td>${x.category}</td><td>${rupiahFull(x.target)}</td><td>${rupiahFull(x.value)}</td><td>${x.percentage}%</td></tr>`).join("");
-
-  markers.forEach(m=>m.remove()); markers=[];
-  if(level!=="province"){
-    DATA.regions.forEach(r=>{
-      const m=L.marker([r.lat,r.lng]).addTo(map);
-      m.bindPopup(`<b>${r.name}</b><br>TKDD 2024: ${fmt(r.budget_million)}<br>Realisasi: ${fmt(r.realization_million)} (${r.realization_pct}%)<br><a href="${r.source}" target="_blank">Sumber DJPK ↗</a>`);
-      m.on("click",()=>{document.querySelector("#region").value=r.id; render();});
-      markers.push(m);
-    });
-  }
+ setKpis();
+ const y=year.value, f=focus.value, rid=region.value, q=search.value.trim().toLowerCase();
+ const selected=DATA.regions.find(r=>r.id===rid);
+ renderSummary(y,f,selected,q); renderApbd(y); renderDistricts(rid,q); renderLatest(q); renderMarkers(rid,q);
 }
-function rupiahFull(n){return new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n)}
-document.querySelector("#year").addEventListener("change",render);
-document.querySelector("#level").addEventListener("change",render);
-document.querySelector("#region").addEventListener("change",render);
-document.querySelector("#search").addEventListener("input",render);
-document.querySelector("#reset").addEventListener("click",()=>{document.querySelector("#year").value="2024";document.querySelector("#level").value="kabupaten";document.querySelector("#region").value="all";document.querySelector("#search").value="";render();});
+function renderSummary(y,f,selected,q){
+ let html="";
+ if(f==="latest"){
+  summarySubtitle.textContent="Indikator terbaru dari Open Data Gorontalo.";
+  html=DATA.open_data.latest_indicators.filter(x=>!q||x.name.toLowerCase().includes(q)).slice(0,8).map(x=>`<div class="summary-row"><span>${esc(x.name)}</span><strong>${esc(x.value)} ${esc(x.unit)}</strong></div>`).join("");
+ }else if(f==="tkdd"){
+  summarySubtitle.textContent="TKDD 2024 — DJPK/SIKD.";
+  const a=DATA.aggregates.six_district_city_total_tkdd_2024;
+  html=`<div class="summary-row"><span>6 kabupaten/kota</span><strong>${moneyM(a.budget_million)}</strong></div><div class="summary-row"><span>Realisasi</span><strong>${moneyM(a.realization_million)}</strong></div><div class="summary-row"><span>Persentase</span><strong>${a.realization_pct}%</strong></div>`;
+  if(selected) html+=`<div class="summary-row"><span>Wilayah terpilih</span><strong>${esc(selected.name)}</strong></div><div class="summary-row"><span>TKDD</span><strong>${moneyM(selected.budget_million)} → ${moneyM(selected.realization_million)}</strong></div>`;
+ }else{
+  summarySubtitle.textContent="APBD Provinsi Gorontalo "+y+".";
+  if(y==="2026"){const p=DATA.province.apbd_history["2026"];html=`<div class="summary-row"><span>Pendapatan awal</span><strong>${moneyB(p.initial.pendapatan.total/1e9)}</strong></div><div class="summary-row"><span>Belanja awal</span><strong>${moneyB(p.initial.belanja.total/1e9)}</strong></div><div class="summary-row"><span>Belanja perubahan terbaru</span><strong>${moneyB(p.latest_change.belanja)}</strong></div><div class="summary-row"><span>Status</span><strong>Perubahan 2026 dilaporkan; cek Perda final</strong></div>`}
+  else if(y==="2025"){const s=DATA.province.apbd_history["2025"].summary;html=`<div class="summary-row"><span>Pendapatan</span><strong>${moneyB(s.pendapatan_realization_billion)}</strong></div><div class="summary-row"><span>PAD</span><strong>${moneyB(s.pad_realization_billion)}</strong></div><div class="summary-row"><span>Belanja terealisasi</span><strong>${moneyB(s.belanja_realization_billion)}</strong></div><div class="summary-row"><span>SILPA</span><strong>${moneyB(s.silpa_billion)}</strong></div>`}
+  else {const rows=DATA.province.apbd_history[y].rows; const r=rows.find(x=>x[0]==="Belanja Daerah"); html=`<div class="summary-row"><span>Belanja Daerah</span><strong>${moneyM(r[1])} → ${moneyM(r[2])}</strong></div><div class="summary-row"><span>Realisasi</span><strong>${r[3]}%</strong></div>`}
+ }
+ summary.innerHTML=html||'<p>Tidak ada data yang cocok.</p>';
+}
+function renderApbd(y){
+ const rows=[];
+ if(y==="2026"){const p=DATA.province.apbd_history["2026"];rows.push(["2026","Pendapatan awal",p.initial.pendapatan.total/1e9,"—","—","Perda 8/2025"]);rows.push(["2026","Belanja awal",p.initial.belanja.total/1e9,"—","—","Perda 8/2025"]);rows.push(["2026","Pendapatan APBD-P terbaru",p.latest_change.pendapatan,"—","—","Laporan perubahan"]);rows.push(["2026","Belanja APBD-P terbaru",p.latest_change.belanja,"—","—","Laporan perubahan"])}
+ if(y==="2025"){const s=DATA.province.apbd_history["2025"].summary;rows.push(["2025","Pendapatan",s.pendapatan_target_billion/1000,s.pendapatan_realization_billion/1000,s.pendapatan_realization_pct+"%","Realisasi 2025"]);rows.push(["2025","PAD",s.pad_target_billion/1000,s.pad_realization_billion/1000,s.pad_realization_pct+"%","Realisasi 2025"]);rows.push(["2025","Belanja Daerah",s.belanja_budget_billion/1000,s.belanja_realization_billion/1000,s.belanja_realization_pct+"%","Realisasi 2025"])}
+ if(y==="2022"||y==="2023"){const rows0=DATA.province.apbd_history["2022"].rows;if(y==="2022")rows.push(...rows0.map(r=>[y,r[0],r[1],r[2],r[3]+"%","DJPK/SIKD"]))}
+ apbdBody.innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td>${moneyB(r[2])}</td><td>${r[3]==="—"?"—":moneyB(r[3])}</td><td>${r[4]}</td><td>${esc(r[5])}</td></tr>`).join("");
+}
+function renderDistricts(rid,q){
+ const rs=DATA.regions.filter(r=>(rid==="all"||r.id===rid)&&(!q||r.name.toLowerCase().includes(q)));
+ districtBody.innerHTML=rs.map(r=>`<tr><td>${esc(r.name)}</td><td>${moneyM(r.budget_million)}</td><td>${moneyM(r.realization_million)}</td><td>${r.realization_pct}%</td><td><a target="_blank" rel="noopener" href="${r.source}">DJPK ↗</a></td></tr>`).join("");
+}
+function renderLatest(q){
+ const rs=DATA.open_data.latest_indicators.filter(x=>!q||x.name.toLowerCase().includes(q));
+ latestIndicators.innerHTML=rs.map(x=>`<div class="indicator"><b>${esc(x.name)}</b><span>${esc(x.value)} ${esc(x.unit)}</span><small>${esc(x.period)}</small></div>`).join("")||"<p>Tidak ada indikator yang cocok.</p>";
+}
+function renderMarkers(rid,q){
+ markers.forEach(m=>m.remove());markers=[];
+ DATA.regions.filter(r=>(rid==="all"||r.id===rid)&&(!q||r.name.toLowerCase().includes(q))).forEach(r=>{
+  const m=L.marker([r.lat,r.lng]).addTo(map).bindPopup(`<b>${esc(r.name)}</b><br>TKDD 2024: ${moneyM(r.budget_million)}<br>Realisasi: ${moneyM(r.realization_million)} (${r.realization_pct}%)<br><a target="_blank" href="${r.source}">Sumber DJPK ↗</a>`);markers.push(m);
+ });
+}
+function renderCoverage(){coverage.innerHTML=DATA.coverage.map(x=>`<div class="coverage ${x.status.includes("not")||x.status.includes("pending")||x.status.includes("belum")?"pending":"ok"}"><b>${esc(x.area)}</b><span>${esc(x.status)}</span><small>${esc(x.source)}</small></div>`).join("")}
+function renderSources(){sources.innerHTML=DATA.sources.map(s=>`<a class="source-card" target="_blank" rel="noopener" href="${s.url}"><b>${esc(s.name)}</b><span>${esc(s.type)}</span><small>${esc(s.url)}</small></a>`).join("")}
 document.addEventListener("DOMContentLoaded",load);
