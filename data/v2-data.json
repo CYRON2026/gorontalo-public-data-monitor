@@ -1,0 +1,247 @@
+{
+  "meta": {
+    "version": "V2-real-data-snapshot",
+    "generated_at": "2026-09-18",
+    "status": "PUBLIC_SOURCE_SNAPSHOT",
+    "note": "Snapshot compiled from publicly accessible official pages. It is not a live API feed. Every displayed metric has a source URL and data period.",
+    "next_stage": "V3 real administrative boundaries and deeper Kecamatan/Desa integration."
+  },
+  "province": {
+    "id": "75",
+    "name": "Provinsi Gorontalo",
+    "apbd": {
+      "year": 2022,
+      "budget_million": 1739.47,
+      "realization_million": 1947.93,
+      "realization_pct": 111.98,
+      "source": "https://djpk.kemenkeu.go.id/portal/data/apbd?pemda=00&provinsi=30&tahun=2022"
+    },
+    "open_data_portal": {
+      "datasets_landing": 532,
+      "district_city_datasets_landing": 47,
+      "regional_devices": 27,
+      "source": "https://opendata.gorontaloprov.go.id/dataset",
+      "note": "The portal's landing page currently displays these counts; catalog/search views can return a different count depending on filters/indexing."
+    }
+  },
+  "regions": [
+    {
+      "id": "75.01",
+      "name": "Kab. Boalemo",
+      "level": "kabupaten",
+      "budget_million": 720.43,
+      "realization_million": 690.25,
+      "realization_pct": 95.81,
+      "lat": 0.7186,
+      "lng": 122.4467,
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=01&provinsi=30&tahun=2024",
+      "source_type": "DJPK TKDD",
+      "period": 2024
+    },
+    {
+      "id": "75.02",
+      "name": "Kab. Gorontalo",
+      "level": "kabupaten",
+      "budget_million": 1247.66,
+      "realization_million": 1214.74,
+      "realization_pct": 97.36,
+      "lat": 0.6236,
+      "lng": 122.003,
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=02&provinsi=30&tahun=2024",
+      "source_type": "DJPK TKDD",
+      "period": 2024
+    },
+    {
+      "id": "75.03",
+      "name": "Kota Gorontalo",
+      "level": "kota",
+      "budget_million": 717.14,
+      "realization_million": 707.76,
+      "realization_pct": 98.69,
+      "lat": 0.5412,
+      "lng": 123.0595,
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=03&provinsi=30&tahun=2024",
+      "source_type": "DJPK TKDD",
+      "period": 2024
+    },
+    {
+      "id": "75.04",
+      "name": "Kab. Pohuwato",
+      "level": "kabupaten",
+      "budget_million": 844.14,
+      "realization_million": 822.45,
+      "realization_pct": 97.43,
+      "lat": 0.4492,
+      "lng": 121.939,
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=04&provinsi=30&tahun=2024",
+      "source_type": "DJPK TKDD",
+      "period": 2024
+    },
+    {
+      "id": "75.05",
+      "name": "Kab. Bone Bolango",
+      "level": "kabupaten",
+      "budget_million": 838.26,
+      "realization_million": 817.66,
+      "realization_pct": 97.54,
+      "lat": 0.5394,
+      "lng": 123.1765,
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=05&provinsi=30&tahun=2024",
+      "source_type": "DJPK TKDD",
+      "period": 2024
+    },
+    {
+      "id": "75.06",
+      "name": "Kab. Gorontalo Utara",
+      "level": "kabupaten",
+      "budget_million": 681.09,
+      "realization_million": 662.56,
+      "realization_pct": 97.28,
+      "lat": 0.8295,
+      "lng": 122.998,
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=06&provinsi=30&tahun=2024",
+      "source_type": "DJPK TKDD",
+      "period": 2024
+    }
+  ],
+  "open_data_preview": {
+    "dataset_id": 114,
+    "title": "Pendapatan Asli Daerah Provinsi Gorontalo Tahun 2024",
+    "owner": "Badan Keuangan dan Aset Daerah",
+    "last_updated": "2026-05-16",
+    "depth": "Provinsi",
+    "formats": [
+      "xlsx",
+      "csv",
+      "json",
+      "pdf-metadata"
+    ],
+    "source": "https://opendata.gorontaloprov.go.id/dataset-detail/114",
+    "rows_total": 11,
+    "rows_preview": [
+      {
+        "category": "Pajak Daerah",
+        "target": 437626291107,
+        "percentage": 17.95,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 78554408647
+      },
+      {
+        "category": "Retribusi Daerah",
+        "target": 35895605572,
+        "percentage": 49.31,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 17700365016
+      },
+      {
+        "category": "Hasil Pengelolaan Kekayaan Daerah yang Dipisahkan",
+        "target": 10219035031,
+        "percentage": 0,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 0
+      },
+      {
+        "category": "Lain-lain PAD yang sah",
+        "target": 19451777410,
+        "percentage": 5.91,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 1150362204
+      },
+      {
+        "category": "Pajak Daerah",
+        "target": 437626291107,
+        "percentage": 27.16,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 118880203380
+      },
+      {
+        "category": "Retribusi Daerah",
+        "target": 35895605572,
+        "percentage": 24.22,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 8692492844
+      },
+      {
+        "category": "Lain-lain PAD yang sah",
+        "target": 19451777410,
+        "percentage": 6.56,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 1276786850
+      },
+      {
+        "category": "Pajak Daerah",
+        "target": 437626291107,
+        "percentage": 69.54,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 304512873573
+      },
+      {
+        "category": "Retribusi Daerah",
+        "target": 35895605572,
+        "percentage": 121.53,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 43623954769
+      },
+      {
+        "category": "Hasil Pengelolaan Kekayaan Daerah yang Dipisahkan",
+        "target": 10219035031,
+        "percentage": 113.32,
+        "year": 2024,
+        "region": "GORONTALO",
+        "code": "75",
+        "value": 11580368337
+      }
+    ],
+    "note": "The source page states 11 rows total; this V2 stores the first 10 visible rows as a preview and deliberately does not aggregate them because the repeated categories indicate multiple observations that need period/semantic normalization first."
+  },
+  "procurement": {
+    "status": "SOURCE_CONNECTED_NOT_YET_PACKAGE_LEVEL",
+    "source": "https://ptpep.lkpp.go.id/laporan/dashboard-klpd",
+    "source_name": "LKPP PTPEP Dashboard Kinerja PBJ K/L/PD",
+    "data_basis": [
+      "SiRUP",
+      "SPSE",
+      "DJPK APBD for relevant procurement calculations"
+    ],
+    "note": "The official dashboard explains its sources and coverage. Package-level Gorontalo records are not hard-coded here until an accessible structured endpoint/export is verified."
+  },
+  "administrative_reference": {
+    "title": "Master File Desa Provinsi Gorontalo 2025",
+    "release_date": "2026-03-31",
+    "revision_date": "2026-09-16",
+    "source": "https://gorontalo.bps.go.id/id/publication/2026/03/31/fff77cc651cc3a5df7ba7dbd/master-file-desa-provinsi-gorontalo-2025.html",
+    "note": "Official BPS reference for village-level names by kecamatan and kabupaten. V3 will use it as an administrative hierarchy reference; actual polygon boundaries are a separate GIS dataset."
+  },
+  "history": [
+    {
+      "year": 2022,
+      "province_budget_million": 1739.47,
+      "province_realization_million": 1947.93,
+      "source": "https://djpk.kemenkeu.go.id/portal/data/apbd?pemda=00&provinsi=30&tahun=2022"
+    },
+    {
+      "year": 2024,
+      "district_tkdd_budget_million": 5048.72,
+      "district_tkdd_realization_million": 4915.42,
+      "source": "DJPK TKDD 2024, six Gorontalo kabupaten/kota source pages"
+    }
+  ]
+}

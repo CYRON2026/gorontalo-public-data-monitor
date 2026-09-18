@@ -1,4 +1,44 @@
-{
-  "generated_at": null,
-  "sources": []
-}
+[
+  {
+    "id": "open-data",
+    "name": "Open Data Gorontalo",
+    "url": "https://opendata.gorontaloprov.go.id/dataset",
+    "role": "Dataset sektoral pemerintah daerah",
+    "status": "verified"
+  },
+  {
+    "id": "djpk-apbd",
+    "name": "DJPK / SIKD APBD",
+    "url": "https://djpk.kemenkeu.go.id/portal/data/apbd",
+    "role": "APBD dan realisasi",
+    "status": "verified"
+  },
+  {
+    "id": "djpk-tkdd",
+    "name": "DJPK / SIKD TKDD",
+    "url": "https://djpk.kemenkeu.go.id/portal/data/tkdd",
+    "role": "Transfer ke daerah per kabupaten/kota",
+    "status": "verified"
+  },
+  {
+    "id": "lkpp",
+    "name": "LKPP PTPEP",
+    "url": "https://ptpep.lkpp.go.id/laporan/dashboard-klpd",
+    "role": "Kinerja pengadaan; sumber SiRUP dan SPSE",
+    "status": "verified"
+  },
+  {
+    "id": "bps",
+    "name": "BPS Provinsi Gorontalo",
+    "url": "https://gorontalo.bps.go.id/",
+    "role": "Referensi statistik dan wilayah",
+    "status": "verified"
+  },
+  {
+    "id": "bps-master-desa",
+    "name": "BPS Master File Desa 2025",
+    "url": "https://gorontalo.bps.go.id/id/publication/2026/03/31/fff77cc651cc3a5df7ba7dbd/master-file-desa-provinsi-gorontalo-2025.html",
+    "role": "Nama wilayah desa/UPT menurut kecamatan dan kabupaten",
+    "status": "verified"
+  }
+]
