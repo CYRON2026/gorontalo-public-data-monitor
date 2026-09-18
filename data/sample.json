@@ -1,0 +1,19 @@
+{
+  "year": 2026,
+  "regions": [
+    {"id":"gorontalo","name":"Provinsi Gorontalo","level":"province","lat":0.5412,"lng":123.0595,"budget":8500000000000,"realization":5600000000000},
+    {"id":"kab-gorontalo","name":"Kabupaten Gorontalo","level":"kabupaten","lat":0.613,"lng":122.977,"budget":1800000000000,"realization":1210000000000},
+    {"id":"kab-bone-bolango","name":"Bone Bolango","level":"kabupaten","lat":0.502,"lng":123.277,"budget":1500000000000,"realization":980000000000},
+    {"id":"kab-boalemo","name":"Boalemo","level":"kabupaten","lat":0.633,"lng":122.316,"budget":1300000000000,"realization":850000000000},
+    {"id":"kab-pohuwato","name":"Pohuwato","level":"kabupaten","lat":0.449,"lng":121.939,"budget":1600000000000,"realization":1010000000000},
+    {"id":"kab-bolmong-utara","name":"Gorontalo Utara","level":"kabupaten","lat":0.824,"lng":122.796,"budget":1400000000000,"realization":910000000000},
+    {"id":"kota-gorontalo","name":"Kota Gorontalo","level":"kabupaten","lat":0.54,"lng":123.07,"budget":1200000000000,"realization":790000000000}
+  ],
+  "procurement": [
+    {"id":1,"package":"Kendaraan operasional lapangan","institution":"Pemda Kabupaten Gorontalo","region":"Kabupaten Gorontalo","value":620000000,"benchmark":570000000,"status":"review"},
+    {"id":2,"package":"Pengadaan komputer administrasi","institution":"Dinas ABC","region":"Kota Gorontalo","value":185000000,"benchmark":190000000,"status":"normal"},
+    {"id":3,"package":"Peralatan laboratorium","institution":"Dinas XYZ","region":"Bone Bolango","value":950000000,"benchmark":700000000,"status":"anomaly"},
+    {"id":4,"package":"Jasa pemeliharaan gedung","institution":"Sekretariat Daerah","region":"Boalemo","value":300000000,"benchmark":null,"status":"unknown"},
+    {"id":5,"package":"Perangkat jaringan","institution":"Dinas Kominfo","region":"Pohuwato","value":420000000,"benchmark":400000000,"status":"review"}
+  ]
+}
