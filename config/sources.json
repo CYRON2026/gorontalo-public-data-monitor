@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "name": "Open Data Gorontalo",
+      "url": "https://opendata.gorontaloprov.go.id/",
+      "types": ["csv","xlsx","json"],
+      "priority": "high",
+      "notes": "Target utama katalog dataset daerah."
+    },
+    {
+      "name": "DJPK / SIKD APBD",
+      "url": "https://djpk.kemenkeu.go.id/portal/data/apbd",
+      "types": ["web"],
+      "priority": "high",
+      "notes": "Target data APBD dan realisasi."
+    },
+    {
+      "name": "LKPP Dashboard KLPD",
+      "url": "https://ptpep.lkpp.go.id/laporan/dashboard-klpd",
+      "types": ["web"],
+      "priority": "high",
+      "notes": "Target data pengadaan."
+    },
+    {
+      "name": "JDIH BPK",
+      "url": "https://peraturan.bpk.go.id/",
+      "types": ["web","document"],
+      "priority": "medium",
+      "notes": "Target regulasi/dokumen hukum."
+    }
+  ]
+}
