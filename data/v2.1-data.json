@@ -1,10 +1,12 @@
 {
   "meta": {
-    "version": "V2.1-2026",
-    "snapshot_date": "2026-09-18",
+    "version": "V2.2-2026",
+    "snapshot_date": "2026-09-19",
     "status": "static_verified_public_data_snapshot",
     "scope": "Provinsi Gorontalo public fiscal, procurement-source, administrative-reference and latest public indicators",
-    "note": "Data are snapshots from official public sources. They are not live synchronization. Current-year realization is shown only when a source provides it."
+    "note": "Data are snapshots from official public sources. They are not live synchronization. Current-year realization is shown only when a source provides it.",
+    "auto_sync": "enabled_architecture_safe_mode",
+    "auto_sync_note": "GitHub Actions can periodically refresh sources. Failed source fetches do not overwrite verified snapshot data."
   },
   "province": {
     "id": "75",
@@ -480,6 +482,34 @@
       "name": "JDIH Provinsi Gorontalo",
       "url": "https://jdih.gorontaloprov.go.id/",
       "type": "official regional legal database"
+    },
+    {
+      "id": "djpb-gorontalo",
+      "name": "DJPb Kanwil Gorontalo",
+      "url": "https://djpb.kemenkeu.go.id/kanwil/gorontalo/",
+      "type": "official regional fiscal publication"
     }
-  ]
+  ],
+  "live_context": {
+    "djpb_regional_consolidated_may_2026": {
+      "period": "s.d. 31 Mei 2026",
+      "pendapatan_realization_billion": 2020,
+      "pendapatan_realization_pct": 28.78,
+      "belanja_realization_billion": 1890,
+      "belanja_realization_pct": 27.17,
+      "source": "https://djpb.kemenkeu.go.id/kanwil/gorontalo/id/data-publikasi/publikasi/berita-terbaru/2984-press-conference-apbn-lo-hulonthalo-s-d-31-mei-2026.html",
+      "scope": "APBD konsolidasi regional seluruh pemda Gorontalo; bukan APBD Provinsi saja",
+      "checked": "2026-09-19"
+    },
+    "djpk_2026": {
+      "source": "https://djpk.kemenkeu.go.id/portal/data/apbd?pemda=00&provinsi=30&tahun=2026",
+      "status": "source_available_specific_record_not_extracted_in_snapshot",
+      "latest_national_page_note": "SIKD states 2026 APBD data received through 17 Sep 2026 and includes APBD plus realization; province-specific values should be extracted by the automated collector before replacing verified snapshot values."
+    },
+    "open_data_latest": {
+      "title": "Penyandang disabilitas terlantar yang mendapatkan Permakanan sesuai dengan Standar Gizi Minimal di dalam panti",
+      "date": "2026-09-11",
+      "source": "https://opendata.gorontaloprov.go.id/dataset"
+    }
+  }
 }
