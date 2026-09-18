@@ -1,94 +1,112 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Gorontalo Public Data Monitor</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-   />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<title>Gorontalo Public Data Monitor — V2</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-<header class="topbar">
-  <div>
-    <div class="eyebrow">PUBLIC DATA MONITOR</div>
-    <h1>Gorontalo Public Data Monitor</h1>
-    <p>Dashboard eksplorasi data publik: anggaran, pengadaan, wilayah, dan pemeriksaan anomali.</p>
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">GORONTALO PUBLIC DATA MONITOR</div>
+    <h1>V2 — Real Public Data Snapshot</h1>
+    <p>Dashboard transparansi dan analisis data publik Gorontalo. Angka yang tampil berasal dari sumber publik resmi dan diberi periode + sumber.</p>
+    <div class="hero-actions">
+      <span class="pill">PUBLIC DATA</span>
+      <span class="pill">SOURCE-TRACEABLE</span>
+      <span class="pill">V2</span>
+    </div>
   </div>
-  <div class="status"><span></span> Prototype • data contoh</div>
 </header>
 
-<main class="container">
-  <section class="filters card">
-    <label>Tahun<select id="yearFilter"><option>2026</option><option>2025</option><option>2024</option></select></label>
-    <label>Level wilayah<select id="levelFilter">
-      <option value="province">Provinsi</option>
-      <option value="kabupaten">Kabupaten/Kota</option>
-      <option value="kecamatan">Kecamatan</option>
-      <option value="desa">Desa/Kelurahan</option>
-    </select></label>
-    <label>Wilayah<select id="regionFilter"><option value="all">Semua wilayah</option></select></label>
-    <label>Pencarian<input id="searchBox" placeholder="Cari paket, instansi, vendor..."></label>
+<main class="wrap">
+  <section class="notice">
+    <strong>Catatan V2:</strong> ini sudah memakai <b>snapshot data publik nyata</b>, tetapi belum live-sync otomatis. Peta masih berupa titik wilayah; batas administrasi Kabupaten → Kecamatan → Desa akan masuk V3.
   </section>
 
-  <section class="notice">
-    <strong>Catatan:</strong> angka pada prototype ini adalah data contoh. Sistem produksi harus menampilkan sumber asli, tanggal data, metode pengolahan, dan tautan dokumen publik.
+  <section class="controls card">
+    <div class="field"><label>Tahun</label><select id="year"><option value="2024">2024</option><option value="2022">2022</option></select></div>
+    <div class="field"><label>Tingkat wilayah</label><select id="level"><option value="kabupaten">Kabupaten/Kota</option><option value="province">Provinsi</option></select></div>
+    <div class="field"><label>Wilayah</label><select id="region"><option value="all">Semua wilayah</option></select></div>
+    <div class="field grow"><label>Cari</label><input id="search" placeholder="Cari wilayah, dataset, kategori..."></div>
+    <button id="reset" class="btn secondary">Reset</button>
   </section>
 
   <section class="kpis">
-    <div class="kpi card"><span>Total APBD</span><b id="kpiBudget">Rp0</b><small>data terpilih</small></div>
-    <div class="kpi card"><span>Realisasi</span><b id="kpiRealization">Rp0</b><small id="kpiRealizationPct">0%</small></div>
-    <div class="kpi card"><span>Paket Pengadaan</span><b id="kpiPackages">0</b><small>contoh terindeks</small></div>
-    <div class="kpi card"><span>Perlu Ditinjau</span><b id="kpiFlags">0</b><small>indikasi anomali, bukan kesimpulan pelanggaran</small></div>
+    <div class="kpi card"><span>Transfer/TKDD 2024</span><b id="kpiBudget">—</b><small>agregasi 6 kab/kota</small></div>
+    <div class="kpi card"><span>Realisasi TKDD</span><b id="kpiReal">—</b><small id="kpiPct">—</small></div>
+    <div class="kpi card"><span>Dataset Open Data</span><b id="kpiDatasets">—</b><small>angka landing portal</small></div>
+    <div class="kpi card"><span>Sumber terverifikasi</span><b id="kpiSources">—</b><small>official/public sources</small></div>
   </section>
 
-  <section class="grid">
+  <section class="grid-2">
     <div class="card map-card">
-      <div class="section-head"><div><h2>Peta Wilayah</h2><p>Klik marker untuk melihat ringkasan.</p></div></div>
+      <div class="section-head"><div><h2>Peta Wilayah</h2><p>V2 memakai titik pusat wilayah. Polygon batas asli masuk V3.</p></div><span class="tag">MAP</span></div>
       <div id="map"></div>
     </div>
     <div class="card">
-      <div class="section-head"><div><h2>Status Analisis</h2><p>Rule-based prototype.</p></div></div>
-      <div class="legend">
-        <div><i class="dot normal"></i><span>Normal</span><b id="normalCount">0</b></div>
-        <div><i class="dot review"></i><span>Perlu ditinjau</span><b id="reviewCount">0</b></div>
-        <div><i class="dot anomaly"></i><span>Anomali harga</span><b id="anomalyCount">0</b></div>
-        <div><i class="dot unknown"></i><span>Tidak cukup data</span><b id="unknownCount">0</b></div>
-      </div>
-      <div class="mini-note">Status dibuat dari aturan contoh. Pada versi produksi, benchmark harga harus mempertimbangkan spesifikasi, tanggal, pajak, lokasi, volume, dan sumber harga.</div>
+      <div class="section-head"><div><h2>Ringkasan Wilayah</h2><p>Data TKDD 2024 dari DJPK/SIKD.</p></div><span class="tag">DJPK</span></div>
+      <div id="regionSummary" class="summary"></div>
     </div>
   </section>
 
   <section class="card">
-    <div class="section-head">
-      <div><h2>Indeks Pengadaan</h2><p>Contoh tabel yang nantinya diisi dari data publik.</p></div>
-      <button id="resetBtn">Reset filter</button>
+    <div class="section-head"><div><h2>TKDD Kabupaten/Kota</h2><p>Anggaran, realisasi, dan persentase penyaluran/realiasi dari halaman DJPK masing-masing wilayah.</p></div><span class="tag">REAL DATA</span></div>
+    <div class="table-wrap"><table><thead><tr><th>Wilayah</th><th>Anggaran</th><th>Realisasi</th><th>%</th><th>Sumber</th></tr></thead><tbody id="districtBody"></tbody></table></div>
+  </section>
+
+  <section class="grid-2">
+    <div class="card">
+      <div class="section-head"><div><h2>Open Data — PAD 2024</h2><p>Preview dataset resmi, bukan hasil agregasi buatan.</p></div><span class="tag">OPEN DATA</span></div>
+      <div class="dataset-meta" id="padMeta"></div>
+      <div class="table-wrap"><table><thead><tr><th>Kategori</th><th>Target</th><th>Nilai</th><th>%</th></tr></thead><tbody id="padBody"></tbody></table></div>
+      <a class="source-link" target="_blank" rel="noopener" href="https://opendata.gorontaloprov.go.id/dataset-detail/114">Buka dataset asli ↗</a>
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Paket</th><th>Instansi</th><th>Wilayah</th><th>Nilai</th><th>Benchmark</th><th>Deviasi</th><th>Status</th></tr></thead>
-        <tbody id="procurementBody"></tbody>
-      </table>
+
+    <div class="card">
+      <div class="section-head"><div><h2>LKPP / Pengadaan</h2><p>Sumber pengadaan sudah teridentifikasi; package-level import ditahan sampai endpoint/export terstruktur diverifikasi.</p></div><span class="tag amber">SOURCE READY</span></div>
+      <div class="source-status">
+        <div><span>Status</span><strong>Terhubung sebagai sumber publik</strong></div>
+        <div><span>Basis</span><strong>SiRUP + SPSE</strong></div>
+        <div><span>Next</span><strong>Import package-level Gorontalo</strong></div>
+      </div>
+      <a class="source-link" target="_blank" rel="noopener" href="https://ptpep.lkpp.go.id/laporan/dashboard-klpd">Buka dashboard LKPP ↗</a>
     </div>
   </section>
 
-  <section class="card sources">
-    <div class="section-head"><div><h2>Sumber Data</h2><p>Portal publik yang menjadi target integrasi.</p></div></div>
-    <div class="source-grid">
-      <a href="https://opendata.gorontaloprov.go.id/" target="_blank" rel="noopener"><b>Open Data Gorontalo</b><span>Dataset pemerintah daerah</span></a>
-      <a href="https://djpk.kemenkeu.go.id/portal/data/apbd" target="_blank" rel="noopener"><b>DJPK / SIKD APBD</b><span>Data APBD dan realisasi</span></a>
-      <a href="https://ptpep.lkpp.go.id/laporan/dashboard-klpd" target="_blank" rel="noopener"><b>LKPP</b><span>Informasi pengadaan</span></a>
-      <a href="https://peraturan.bpk.go.id/" target="_blank" rel="noopener"><b>JDIH BPK</b><span>Regulasi dan dokumen hukum</span></a>
+  <section class="card">
+    <div class="section-head"><div><h2>Data Lineage V2</h2><p>Setiap angka utama diarahkan ke sumber publiknya.</p></div><span class="tag">TRACE</span></div>
+    <div class="lineage">
+      <div>Dashboard</div><i>→</i><div>Snapshot</div><i>→</i><div>Record</div><i>→</i><div>Dataset</div><i>→</i><div>Sumber resmi</div>
     </div>
+    <div id="sources" class="source-grid"></div>
   </section>
 
-  <footer>
-    Gorontalo Public Data Monitor • Open/public data research prototype • Tidak berafiliasi dengan pemerintah daerah.
-  </footer>
+  <section class="card roadmap">
+    <div class="section-head"><div><h2>Roadmap</h2><p>V2 selesai sebagai fondasi data; tahap berikutnya tidak boleh mengarang data.</p></div></div>
+    <div class="roadmap-grid">
+      <div class="done">V1<br><small>Prototype</small></div>
+      <div class="done">V1.1<br><small>Responsive + map fix</small></div>
+      <div class="active">V2<br><small>Real public data snapshot</small></div>
+      <div>V3<br><small>Real boundaries</small></div>
+      <div>V4<br><small>APBD ↔ RUP ↔ PBJ ↔ Vendor ↔ Barang</small></div>
+      <div>V5<br><small>Historical tracking</small></div>
+      <div>V6<br><small>Market benchmark</small></div>
+      <div>V7<br><small>AI anomaly engine</small></div>
+      <div>V8<br><small>Public audit trail</small></div>
+    </div>
+  </section>
 </main>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
- ></script>
-<script src="app.js"></script>
+<footer class="wrap footer">
+  <p>Gorontalo Public Data Monitor — public-data analysis project. Anomaly flags are analytical signals, not proof of wrongdoing.</p>
+  <p>Snapshot: 18 September 2026.</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./app.js"></script>
 </body>
 </html>
