@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-09-18T18:28:51.596145+00:00",
+  "results": {
+    "open_data_home": {
+      "ok": true,
+      "http_status": 200,
+      "bytes": 28557
+    },
+    "djpk_apbd_2026": {
+      "ok": true,
+      "http_status": 200,
+      "bytes": 40779
+    }
+  }
+}
