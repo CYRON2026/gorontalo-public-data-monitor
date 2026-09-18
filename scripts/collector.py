@@ -1,24 +1,29 @@
-# Kerangka collector. Jangan menganggap semua portal memiliki API.
-# Mulai dari URL yang memang menyediakan file/API publik dan hormati robots.txt,
-# rate limit, Terms of Service, serta atribusi sumber.
+"""Refresh the public source catalog from config/sources.json.
 
+This is a catalog/status scaffold only. It does not fabricate or replace
+financial/procurement records. Actual dataset collectors can be added later
+for sources that expose a stable public file/API endpoint.
+"""
 import json
-from pathlib import Path
 from datetime import datetime, timezone
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sources = json.loads((ROOT / "config/sources.json").read_text(encoding="utf-8"))
+config = json.loads((ROOT / "config/sources.json").read_text(encoding="utf-8"))
+now = datetime.now(timezone.utc).isoformat()
 
 catalog = []
-for s in sources["sources"]:
+for source in config.get("sources", []):
     catalog.append({
-        "name": s["name"],
-        "url": s["url"],
-        "checked_at": datetime.now(timezone.utc).isoformat(),
-        "status": "pending_connector",
-        "notes": s.get("notes","")
+        "id": source["name"].lower().replace(" ", "-").replace("/", "-"),
+        "name": source["name"],
+        "url": source["url"],
+        "type": "public source",
+        "checked_at": now,
+        "status": "cataloged",
+        "notes": source.get("notes", "")
     })
 
 out = ROOT / "data/source_catalog.json"
-out.write_text(json.dumps({"generated_at":datetime.now(timezone.utc).isoformat(),"sources":catalog},indent=2,ensure_ascii=False),encoding="utf-8")
-print(f"Wrote {out}")
+out.write_text(json.dumps(catalog, ensure_ascii=False, indent=2), encoding="utf-8")
+print(f"Wrote {out} ({len(catalog)} sources)")
