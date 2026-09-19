@@ -18,7 +18,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - name: Validate public data
-        run: python scripts/validate.py
-      - name: Compile Python scripts
-        run: python -m py_compile scripts/*.py
+      - name: Validate JSON and hierarchy
+        run: python -B scripts/validate.py
+      - name: JavaScript syntax check
+        run: node --check app.js
+      - name: Reject build/cache artifacts
+        run: |
+          ! find . -type f \( -name '*.pyc' -o -name '*.pyo' \) | grep -q .
+          ! find . -type d \( -name '__pycache__' -o -name '.pytest_cache' -o -name '.mypy_cache' \) | grep -q .
