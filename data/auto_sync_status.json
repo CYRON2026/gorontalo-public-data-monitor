@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-09-19T18:29:00.574181+00:00",
+  "mode": "safe",
+  "release": "3.2.0",
+  "result": "no-overwrite",
+  "note": "V3.2 keeps verified snapshot unless a source-specific collector passes validation."
+}
