@@ -1,25 +1,24 @@
-import json, re, urllib.request, datetime
+"""Non-destructive sync entry point.
+Actual source-specific ETL is intentionally separated from the verified snapshot.
+"""
 from pathlib import Path
+import json
+from datetime import datetime, timezone
 
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/"data/auto_sync_status.json"
-SOURCES={
-  "open_data_home":"https://opendata.gorontaloprov.go.id/",
-  "djpk_apbd_2026":"https://djpk.kemenkeu.go.id/portal/data/apbd?pemda=00&provinsi=30&tahun=2026",
-  "boundary_service":"https://geoportal.pertanian.go.id/arcgis/rest/services/Hosted/Batas_Administrasi_Desa/FeatureServer/0",
-}
-status={"checked_at":datetime.datetime.now(datetime.timezone.utc).isoformat(),"results":{}}
-for name,url in SOURCES.items():
-    try:
-        req=urllib.request.Request(url,headers={"User-Agent":"Gorontalo-Public-Data-Monitor/3.0"})
-        with urllib.request.urlopen(req,timeout=25) as r:
-            body=r.read().decode("utf-8","ignore")
-        status["results"][name]={"ok":True,"http_status":200,"bytes":len(body)}
-        if name=="open_data_home":
-            m=re.search(r"(\d+)\s*Dataset",body,re.I)
-            if m: status["results"][name]["dataset_count_detected"]=int(m.group(1))
-    except Exception as e:
-        status["results"][name]={"ok":False,"error":type(e).__name__+": "+str(e)}
+DATA=ROOT/'data/public-data.json'
+STATUS=ROOT/'data/auto_sync_status.json'
 
-OUT.write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding="utf-8")
-print(json.dumps(status,ensure_ascii=False))
+def main():
+    data=json.loads(DATA.read_text(encoding='utf-8'))
+    status={
+        'checked_at':datetime.now(timezone.utc).isoformat(),
+        'mode':'safe',
+        'release':data['meta']['release'],
+        'result':'no-overwrite',
+        'note':'V3.2 keeps verified snapshot unless a source-specific collector passes validation.'
+    }
+    STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print('Auto-sync safe mode: verified snapshot preserved.')
+
+if __name__=='__main__':main()
