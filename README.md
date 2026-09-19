@@ -1,36 +1,38 @@
-# Gorontalo Public Data Monitor
+# Data Publik Gorontalo
 
-## V3.1 — Geographic hierarchy & administrative map
+Dashboard statis untuk menelusuri data publik Provinsi Gorontalo dengan sumber yang dapat dibuka ulang.
 
-V3 mempertahankan data publik terverifikasi dari baseline V2 dan menambahkan fondasi geografis yang dapat dipakai untuk pengembangan berikutnya.
+## V3.2
 
-### Yang berubah
-- `data/public-data.json` tetap menjadi data utama.
-- `data/regions.json` menjadi referensi hierarchy: Provinsi → 6 Kabupaten/Kota → 77 Kecamatan.
-- Peta sekarang menggunakan polygon administrasi desa/kelurahan dari feature service 2025 dan mengelompokkannya berdasarkan kode parent untuk tampilan kecamatan/kabupaten/provinsi.
-- Level Desa/Kelurahan mengambil nama, kode, dan polygon dari service publik; tidak ada nama wilayah yang ditebak.
-- Filter wilayah berubah mengikuti level yang dipilih.
-- Klik polygon membuka identitas wilayah dan parent hierarchy.
-- Data fiskal V2 tidak dinaikkan/diturunkan secara paksa ke desa. V3 hanya menyediakan konteks geografis; agregasi ke level bawah menunggu data yang benar-benar punya geographic scope.
+V3.2 mengubah pola aplikasi menjadi dua lapis:
 
-### Sumber geografis
-BPS Provinsi Gorontalo, *Master File Desa Provinsi Gorontalo 2025* (revisi 16 September 2026) digunakan untuk struktur kode/nama hierarchy. Polygon desa/kelurahan menggunakan feature service administrasi Semester 1 2025 yang mendokumentasikan pemutakhiran batas definitif dan sinkronisasi kode wilayah.
+1. **Dashboard utama** — angka inti, peta, pencarian, sinyal review, dan daftar sumber.
+2. **Sub-web wilayah** — `region.html?level=...&id=...` untuk detail provinsi, kabupaten/kota, kecamatan, dan desa/kelurahan.
 
-### Prinsip keamanan data
-- Tidak ada angka fiskal baru yang dibuat dari geometri.
-- Parent total tidak disalin ke child.
-- Tidak ada klaim bahwa polygon adalah bukti status hukum batas jika sumber menandai batas indikatif/belum ditegaskan.
-- Jika service batas gagal diakses, UI menampilkan status kegagalan dan mempertahankan data snapshot; tidak membuat polygon palsu.
-- V3 belum mengaktifkan anomaly/AI engine atau procurement package fabrication.
+Tujuannya supaya dashboard utama tetap ringan, sementara detail wilayah dapat menampung hierarchy, data keuangan yang benar-benar scoped, dataset sektoral, dan tautan sumber asli.
 
-### Struktur stabil
-`index.html`, `styles.css`, `app.js`, `data/public-data.json`, `data/source_catalog.json`, `data/regions.json`, `scripts/validate.py`, `scripts/auto_sync.py`, `scripts/collector.py`, `README.md`, dan `INSTALL.txt` tetap memakai nama file stabil. Nomor release disimpan di metadata internal.
+## Aturan data
 
+- Data berasal dari sumber publik.
+- Angka parent tidak disalin ke child geography.
+- Dataset yang hanya sampai kabupaten/kota tidak diperlakukan sebagai data kecamatan/desa.
+- Sinyal review adalah petunjuk pemeriksaan, bukan tuduhan pelanggaran.
+- Ketiadaan record lokal bukan bukti bahwa kegiatan tidak ada.
 
-## V3.1
-- Mempertahankan identitas UI gelap sebagai baseline awal maturity.
-- Memperbaiki kontrol per-lokasi di bawah peta.
-- Menambahkan location explorer: metadata wilayah, data scoped bila tersedia, dan drill-down child region.
-- Klik polygon kini memilih lokasi dan menyinkronkan kontrol wilayah.
-- Level kecamatan/desa tidak diisi angka fiskal tanpa sumber dengan geographic scope yang sesuai.
-- Internal release: 3.1.0.
+## Struktur
+
+- `index.html` — dashboard utama
+- `region.html` + `region.js` — sub-web detail wilayah
+- `app.js` — dashboard/map/search
+- `styles.css` — dark responsive UI
+- `data/public-data.json` — snapshot fiskal dan indikator
+- `data/regions.json` — hierarchy wilayah
+- `data/datasets.json` — katalog dataset relevan
+- `data/source_catalog.json` — sumber publik
+- `scripts/validate.py` — pemeriksaan struktur
+- `scripts/collector.py` — manifest collector aman
+- `scripts/auto_sync.py` — safe sync tanpa overwrite destruktif
+
+## Deployment
+
+Bisa di-host di GitHub Pages karena tidak membutuhkan backend untuk dashboard dasar. Peta memakai Leaflet dan sumber boundary publik. Jika boundary eksternal gagal, aplikasi otomatis memakai fallback titik kabupaten/kota dan fungsi detail wilayah tetap berjalan.
