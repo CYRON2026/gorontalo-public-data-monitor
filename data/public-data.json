@@ -7,11 +7,11 @@
     "note": "Data are snapshots from official public sources. They are not live synchronization. Current-year realization is shown only when a source provides it.",
     "auto_sync": "enabled_architecture_safe_mode",
     "auto_sync_note": "GitHub Actions can periodically refresh sources. Failed source fetches do not overwrite verified snapshot data.",
-    "release": "3.0.0",
+    "release": "3.1.0",
     "public_title": "Data Publik Gorontalo",
     "filename": "public-data.json",
     "schema_version": "3.0",
-    "release_note": "V3 geographic hierarchy + administrative boundary integration; fiscal snapshot retained from V2."
+    "release_note": "V3.1 — dark UI, location explorer, drill-down, map selection fixes"
   },
   "province": {
     "id": "75",
