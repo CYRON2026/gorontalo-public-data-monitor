@@ -3,58 +3,99 @@
     {
       "name": "Open Data Gorontalo",
       "url": "https://opendata.gorontaloprov.go.id/",
-      "types": ["csv", "xlsx", "json"],
+      "types": [
+        "csv",
+        "xlsx",
+        "json"
+      ],
       "priority": "high",
       "notes": "Katalog dataset daerah dan data publik perangkat daerah."
     },
     {
       "name": "DJPK / SIKD APBD",
       "url": "https://djpk.kemenkeu.go.id/portal/data/apbd",
-      "types": ["web"],
+      "types": [
+        "web"
+      ],
       "priority": "high",
       "notes": "Data APBD dan realisasi."
     },
     {
       "name": "DJPK / SIKD TKDD",
       "url": "https://djpk.kemenkeu.go.id/portal/data/tkdd",
-      "types": ["web"],
+      "types": [
+        "web"
+      ],
       "priority": "high",
       "notes": "Data transfer ke daerah."
     },
     {
       "name": "LKPP / PTPEP",
       "url": "https://ptpep.lkpp.go.id/laporan/dashboard-klpd",
-      "types": ["web"],
+      "types": [
+        "web"
+      ],
       "priority": "high",
       "notes": "Sumber data pengadaan publik; package-level belum diimpor pada V2.2."
     },
     {
       "name": "BPS Provinsi Gorontalo",
       "url": "https://gorontalo.bps.go.id/",
-      "types": ["web", "document"],
+      "types": [
+        "web",
+        "document"
+      ],
       "priority": "high",
       "notes": "Statistik dan referensi wilayah administratif."
     },
     {
       "name": "JDIH BPK",
       "url": "https://peraturan.bpk.go.id/",
-      "types": ["web", "document"],
+      "types": [
+        "web",
+        "document"
+      ],
       "priority": "medium",
       "notes": "Peraturan dan dokumen hukum publik."
     },
     {
       "name": "JDIH Provinsi Gorontalo",
       "url": "https://jdih.gorontaloprov.go.id/",
-      "types": ["web", "document"],
+      "types": [
+        "web",
+        "document"
+      ],
       "priority": "medium",
       "notes": "Peraturan dan dokumen hukum daerah."
     },
     {
       "name": "DJPb Kanwil Gorontalo",
       "url": "https://djpb.kemenkeu.go.id/kanwil/gorontalo/",
-      "types": ["web", "document"],
+      "types": [
+        "web",
+        "document"
+      ],
       "priority": "high",
       "notes": "Publikasi fiskal regional dan konteks konsolidasi APBD."
+    },
+    {
+      "name": "BPS Master File Desa Gorontalo 2025",
+      "url": "https://gorontalo.bps.go.id/id/publication/2026/03/31/fff77cc651cc3a5df7ba7dbd/master-file-desa-provinsi-gorontalo-2025.html",
+      "types": [
+        "document"
+      ],
+      "priority": "high",
+      "notes": "Referensi hierarchy kode/nama wilayah; revisi 16 September 2026."
+    },
+    {
+      "name": "Boundary Service Desa/Kelurahan 2025",
+      "url": "https://geoportal.pertanian.go.id/arcgis/rest/services/Hosted/Batas_Administrasi_Desa/FeatureServer/0",
+      "types": [
+        "geojson",
+        "web"
+      ],
+      "priority": "high",
+      "notes": "Feature service polygon administrasi desa/kelurahan Semester 1 2025; digunakan oleh V3."
     }
   ]
 }
