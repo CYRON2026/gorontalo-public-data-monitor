@@ -5,8 +5,9 @@
     "revision_date": "2026-09-16",
     "province_code": "75",
     "hierarchy": "Provinsi → Kabupaten/Kota → Kecamatan → Desa/Kelurahan",
-    "schema_version": "3.1",
-    "ui_release": "3.1.0"
+    "schema_version": "3.2",
+    "ui_release": "3.2.0",
+    "v32_note": "Dashboard ringkas + sub-web detail wilayah + external administrative name fallback."
   },
   "province": {
     "id": "75",
@@ -1082,6 +1083,18 @@
     "where": "kdppum='75'",
     "format": "geojson",
     "out_fields": "namobj,kdbbps,kdcbps,kdebps,kdppum,kdpkab,kdcpum,kdepum,wadmkc,wadmkd,wadmkk,wadmpr,tipadm,luaswh,uupp",
-    "note": "Higher-level map views group the 2025 village/kelurahan polygons by their parent administrative codes instead of inventing separate geometry."
+    "note": "Higher-level map views group the 2025 village/kelurahan polygons by their parent administrative codes instead of inventing separate geometry.",
+    "fallbacks": [
+      {
+        "name": "ArcGIS boundary 2025",
+        "type": "geojson",
+        "url": "https://geoportal.pertanian.go.id/arcgis/rest/services/Hosted/Batas_Administrasi_Desa/FeatureServer/0/query"
+      },
+      {
+        "name": "Administrative names",
+        "type": "json",
+        "url": "https://unpkg.com/administratif-indonesia@0.2.0/storages/75-gorontalo.json"
+      }
+    ]
   }
 }

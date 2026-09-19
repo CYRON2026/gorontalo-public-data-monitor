@@ -7,11 +7,18 @@
     "note": "Data are snapshots from official public sources. They are not live synchronization. Current-year realization is shown only when a source provides it.",
     "auto_sync": "enabled_architecture_safe_mode",
     "auto_sync_note": "GitHub Actions can periodically refresh sources. Failed source fetches do not overwrite verified snapshot data.",
-    "release": "3.1.0",
+    "release": "3.2.0",
     "public_title": "Data Publik Gorontalo",
     "filename": "public-data.json",
-    "schema_version": "3.0",
-    "release_note": "V3.1 — dark UI, location explorer, drill-down, map selection fixes"
+    "schema_version": "3.2",
+    "release_note": "V3.2 — dashboard ringkas, pencarian lintas data, region sub-web, map fallback, scope-safe explorer",
+    "architecture": {
+      "dashboard": "ringkas",
+      "region_detail": "region.html?level=&id=",
+      "data_explorer": "data/datasets.json",
+      "map": "polygon service with clickable administrative fallback points",
+      "truth_rule": "no parent financial values copied to child geography"
+    }
   },
   "province": {
     "id": "75",
@@ -549,5 +556,27 @@
       "date": "2026-09-11",
       "source": "https://opendata.gorontaloprov.go.id/dataset"
     }
-  }
+  },
+  "monitoring_rules": [
+    {
+      "id": "realization-over-budget",
+      "label": "Realisasi di atas anggaran",
+      "meaning": "Perlu membaca dokumen anggaran/perubahan dan definisi sumber; bukan bukti pelanggaran."
+    },
+    {
+      "id": "budget-change",
+      "label": "Perubahan anggaran",
+      "meaning": "Bandingkan anggaran awal, perubahan, dan dokumen hukum final."
+    },
+    {
+      "id": "scope-gap",
+      "label": "Scope data tidak tersedia",
+      "meaning": "Ketiadaan angka lokal berarti snapshot belum memiliki sumber dengan scope tersebut."
+    },
+    {
+      "id": "procurement-gap",
+      "label": "Record pengadaan belum diimpor",
+      "meaning": "Jangan menyimpulkan tidak ada pengadaan hanya karena record lokal belum tersedia."
+    }
+  ]
 }
