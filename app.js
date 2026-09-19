@@ -5,16 +5,16 @@ const pct=(a,b)=>b?((a/b)*100).toFixed(2)+"%":"—";
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 async function load(){
  try{
-  const r=await fetch("./data/v2.1-data.json",{cache:"no-store"}); if(!r.ok) throw new Error("HTTP "+r.status);
+  const r=await fetch("./data/public-data.json",{cache:"no-store"}); if(!r.ok) throw new Error("HTTP "+r.status);
   DATA=await r.json(); buildFilters(); initMap(); bind(); render(); renderSources(); renderCoverage();
- }catch(e){document.querySelector("main").innerHTML='<section class="card error"><h2>Data gagal dimuat</h2><p>'+esc(e.message)+'</p><p>Pastikan <code>data/v2.1-data.json</code> sudah di-upload.</p></section>'}
+ }catch(e){document.querySelector("main").innerHTML='<section class="card error"><h2>Data gagal dimuat</h2><p>'+esc(e.message)+'</p><p>Pastikan <code>data/public-data.json</code> sudah di-upload.</p></section>'}
 }
 function buildFilters(){const s=document.querySelector("#region");s.innerHTML='<option value="all">Semua wilayah</option>'+DATA.regions.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")}
 function initMap(){map=L.map("map").setView([0.62,122.65],8);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap contributors"}).addTo(map);setTimeout(()=>map.invalidateSize(true),200)}
 function bind(){
  ["year","focus","region","search"].forEach(id=>document.querySelector("#"+id).addEventListener(id==="search"?"input":"change",render));
  document.querySelector("#reset").onclick=()=>{year.value="2026";focus.value="apbd";region.value="all";search.value="";render()};
- document.querySelector("#download").onclick=()=>{const b=new Blob([JSON.stringify(DATA,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="gorontalo-public-data-monitor-v2.1-2026-snapshot.json";a.click();URL.revokeObjectURL(a.href)}
+ document.querySelector("#download").onclick=()=>{const b=new Blob([JSON.stringify(DATA,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="gorontalo-public-data-monitor-public-snapshot.json";a.click();URL.revokeObjectURL(a.href)}
 }
 function setKpis(){
  const p=DATA.province.apbd_history["2026"], l=p.latest_change, y25=DATA.province.apbd_history["2025"].summary, t=DATA.province.tkdd_2024, a=DATA.aggregates.six_district_city_total_tkdd_2024;

@@ -2,12 +2,12 @@
 <html lang="id">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080808"><title>Gorontalo Public Data Monitor — V2.1 2026</title>
+<meta name="theme-color" content="#080808"><title>Gorontalo Public Data Monitor</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 <header class="hero"><div class="wrap">
-<div class="eyebrow">GORONTALO PUBLIC DATA MONITOR</div><h1>V2.1 — Real Public Data + 2026</h1>
+<div class="eyebrow">GORONTALO PUBLIC DATA MONITOR</div><h1>Data Publik Gorontalo</h1>
 <p>Dashboard publik berbasis snapshot data resmi Gorontalo: APBD, TKDD, Open Data, BPS, dan sumber pengadaan.</p>
 <div class="hero-actions"><span class="pill">REAL PUBLIC DATA</span><span class="pill">2026 UPDATE</span><span class="pill">SOURCE-TRACEABLE</span></div>
 </div></header>
@@ -36,7 +36,7 @@
 </section>
 
 <section class="grid-2">
-<div class="card map-card"><div class="section-head"><div><h2>Peta Kabupaten/Kota</h2><p>V2.1 masih memakai titik pusat. Polygon administrasi asli masuk V3.</p></div><span class="tag">MAP</span></div><div id="map"></div></div>
+<div class="card map-card"><div class="section-head"><div><h2>Peta Kabupaten/Kota</h2><p>Peta masih memakai titik pusat. Polygon administrasi asli akan ditambahkan pada pengembangan berikutnya.</p></div><span class="tag">MAP</span></div><div id="map"></div></div>
 <div class="card"><div class="section-head"><div><h2>Ringkasan Data</h2><p id="summarySubtitle">APBD 2026.</p></div><span class="tag">DATA</span></div><div id="summary" class="summary"></div></div>
 </section>
 
@@ -48,7 +48,7 @@
 
 <section class="grid-2">
 <div class="card"><div class="section-head"><div><h2>Indikator Publik Terbaru</h2><p>Data yang ditampilkan di portal Open Data Gorontalo saat snapshot.</p></div><span class="tag">2026</span></div><div id="latestIndicators" class="indicator-list"></div></div>
-<div class="card"><div class="section-head"><div><h2>Pengadaan / LKPP</h2><p>Sumber sudah terhubung, tetapi paket belum diimpor agar tidak membuat record fiktif.</p></div><span class="tag amber">SOURCE READY</span></div><div class="source-status"><b>Belum ada package-level record di V2.1.</b><p>PTPEP menjelaskan bahwa dashboard memakai SiRUP dan SPSE; sebagian pengadaan langsung/penunjukan langsung dapat belum diumumkan di SiRUP dan data sedang menyesuaikan nomenklatur.</p><a class="source-link" target="_blank" rel="noopener" href="https://ptpep.lkpp.go.id/laporan/dashboard-klpd">Buka LKPP/PTPEP ↗</a></div></div>
+<div class="card"><div class="section-head"><div><h2>Pengadaan / LKPP</h2><p>Sumber sudah terhubung, tetapi paket belum diimpor agar tidak membuat record fiktif.</p></div><span class="tag amber">SOURCE READY</span></div><div class="source-status"><b>Belum ada package-level record pada snapshot ini.</b><p>PTPEP menjelaskan bahwa dashboard memakai SiRUP dan SPSE; sebagian pengadaan langsung/penunjukan langsung dapat belum diumumkan di SiRUP dan data sedang menyesuaikan nomenklatur.</p><a class="source-link" target="_blank" rel="noopener" href="https://ptpep.lkpp.go.id/laporan/dashboard-klpd">Buka LKPP/PTPEP ↗</a></div></div>
 </section>
 
 <section class="card"><div class="section-head"><div><h2>Coverage & Keterbatasan</h2><p>Supaya dashboard tidak memberi kesan data sudah lengkap padahal belum.</p></div><span class="tag">COVERAGE</span></div><div id="coverage" class="coverage-grid"></div></section>
@@ -56,8 +56,8 @@
 <section class="card"><div class="section-head"><div><h2>Source Catalog & Audit Lineage</h2><p>Setiap angka harus bisa ditelusuri ke sumber publiknya.</p></div><span class="tag">TRACE</span></div>
 <div class="lineage"><div>Dashboard</div><i>→</i><div>Analysis</div><i>→</i><div>Record</div><i>→</i><div>Dataset</div><i>→</i><div>Dokumen</div><i>→</i><div>Sumber</div></div><div id="sources" class="source-grid"></div></section>
 
-<section class="card"><div class="section-head"><div><h2>Roadmap</h2><p>V2.1 melengkapi V2 dengan data 2025–2026 dan fondasi lineage.</p></div></div><div class="roadmap-grid">
-<div class="done">V1<br><small>Prototype</small></div><div class="done">V1.1<br><small>Responsive + map</small></div><div class="done">V2<br><small>Real public data</small></div><div class="active">V2.1<br><small>2025–2026 + KPI</small></div><div>V3<br><small>Boundaries + hierarchy</small></div><div>V4<br><small>APBD ↔ RUP ↔ PBJ ↔ Vendor</small></div><div>V5<br><small>Historical</small></div><div>V6<br><small>Benchmark</small></div><div>V7<br><small>Anomaly engine</small></div><div>V8<br><small>Audit trail</small></div>
+<section class="card"><div class="section-head"><div><h2>Roadmap</h2><p>Snapshot publik memuat data dan fondasi lineage yang tersedia.</p></div></div><div class="roadmap-grid">
+<div class="done">V1<br><small>Prototype</small></div><div class="done">V1.1<br><small>Responsive + map</small></div><div class="done">V2<br><small>Real public data</small></div><div class="active">Early Maturity<br><small>Data publik + lineage</small></div><div>V3<br><small>Boundaries + hierarchy</small></div><div>V4<br><small>APBD ↔ RUP ↔ PBJ ↔ Vendor</small></div><div>V5<br><small>Historical</small></div><div>V6<br><small>Benchmark</small></div><div>V7<br><small>Anomaly engine</small></div><div>V8<br><small>Audit trail</small></div>
 </div></section>
 </main>
 <footer class="wrap footer"><p>Gorontalo Public Data Monitor — public-data analysis project. Anomaly ≠ corruption; angka tanpa sumber tidak ditampilkan sebagai fakta.</p><p>Snapshot: 18 September 2026.</p></footer>
