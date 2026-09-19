@@ -1,6 +1,6 @@
 # Gorontalo Public Data Monitor
 
-## V3 — Geographic hierarchy & administrative map
+## V3.1 — Geographic hierarchy & administrative map
 
 V3 mempertahankan data publik terverifikasi dari baseline V2 dan menambahkan fondasi geografis yang dapat dipakai untuk pengembangan berikutnya.
 
@@ -25,3 +25,12 @@ BPS Provinsi Gorontalo, *Master File Desa Provinsi Gorontalo 2025* (revisi 16 Se
 
 ### Struktur stabil
 `index.html`, `styles.css`, `app.js`, `data/public-data.json`, `data/source_catalog.json`, `data/regions.json`, `scripts/validate.py`, `scripts/auto_sync.py`, `scripts/collector.py`, `README.md`, dan `INSTALL.txt` tetap memakai nama file stabil. Nomor release disimpan di metadata internal.
+
+
+## V3.1
+- Mempertahankan identitas UI gelap sebagai baseline awal maturity.
+- Memperbaiki kontrol per-lokasi di bawah peta.
+- Menambahkan location explorer: metadata wilayah, data scoped bila tersedia, dan drill-down child region.
+- Klik polygon kini memilih lokasi dan menyinkronkan kontrol wilayah.
+- Level kecamatan/desa tidak diisi angka fiskal tanpa sumber dengan geographic scope yang sesuai.
+- Internal release: 3.1.0.
