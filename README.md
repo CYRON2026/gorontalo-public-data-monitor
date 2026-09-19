@@ -1,33 +1,27 @@
 # Gorontalo Public Data Monitor
 
-## Baseline V2.2.2 — Early Maturity
+## V3 — Geographic hierarchy & administrative map
 
-V2.2.2 adalah baseline bersih setelah fase beta/eksperimental. Fokus release ini adalah stabilitas struktur file, validasi, sumber data publik, dan kompatibilitas untuk pengembangan berikutnya.
+V3 mempertahankan data publik terverifikasi dari baseline V2 dan menambahkan fondasi geografis yang dapat dipakai untuk pengembangan berikutnya.
 
-### Aturan struktur mulai release ini
+### Yang berubah
+- `data/public-data.json` tetap menjadi data utama.
+- `data/regions.json` menjadi referensi hierarchy: Provinsi → 6 Kabupaten/Kota → 77 Kecamatan.
+- Peta sekarang menggunakan polygon administrasi desa/kelurahan dari feature service 2025 dan mengelompokkannya berdasarkan kode parent untuk tampilan kecamatan/kabupaten/provinsi.
+- Level Desa/Kelurahan mengambil nama, kode, dan polygon dari service publik; tidak ada nama wilayah yang ditebak.
+- Filter wilayah berubah mengikuti level yang dipilih.
+- Klik polygon membuka identitas wilayah dan parent hierarchy.
+- Data fiskal V2 tidak dinaikkan/diturunkan secara paksa ke desa. V3 hanya menyediakan konteks geografis; agregasi ke level bawah menunggu data yang benar-benar punya geographic scope.
 
-- `data/public-data.json` adalah file data utama yang dibaca website dan **nama file dipertahankan** pada setiap upgrade.
-- `data/source_catalog.json` adalah katalog sumber dan memakai nama tetap.
-- `scripts/validate.py` adalah validator utama dan memakai nama tetap.
-- `scripts/auto_sync.py` menangani pemeriksaan sumber berkala dengan mode aman.
-- `scripts/collector.py` dipertahankan untuk katalog sumber.
-- `README.md` adalah dokumentasi utama dan **selalu diperbarui isinya**, bukan dibuat sebagai `README versi.md` baru.
-- `INSTALL.txt` adalah panduan instalasi/replace dan juga memakai nama tetap.
-- Nomor release adalah metadata internal; tampilan publik menggunakan judul `Data Publik Gorontalo`, bukan nomor versi.
+### Sumber geografis
+BPS Provinsi Gorontalo, *Master File Desa Provinsi Gorontalo 2025* (revisi 16 September 2026) digunakan untuk struktur kode/nama hierarchy. Polygon desa/kelurahan menggunakan feature service administrasi Semester 1 2025 yang mendokumentasikan pemutakhiran batas definitif dan sinkronisasi kode wilayah.
 
-### Prinsip upgrade
+### Prinsip keamanan data
+- Tidak ada angka fiskal baru yang dibuat dari geometri.
+- Parent total tidak disalin ke child.
+- Tidak ada klaim bahwa polygon adalah bukti status hukum batas jika sumber menandai batas indikatif/belum ditegaskan.
+- Jika service batas gagal diakses, UI menampilkan status kegagalan dan mempertahankan data snapshot; tidak membuat polygon palsu.
+- V3 belum mengaktifkan anomaly/AI engine atau procurement package fabrication.
 
-Setiap release berikutnya mengganti **isi file yang sama**, bukan membuat rangkaian file `v3-data.json`, `v4-data.json`, dan seterusnya. File lama yang sudah tidak dipakai harus dihapus agar tidak ada sumber data ganda yang membingungkan.
-
-### Batasan saat ini
-
-- Snapshot masih menggunakan data publik yang tersedia; belum menjadi live database.
-- Peta masih menggunakan titik pusat wilayah.
-- Data pengadaan package-level belum diimpor jika belum tersedia/terverifikasi dalam sumber publik.
-- AI/anomaly engine belum digunakan pada baseline ini.
-
-### Roadmap
-
-Baseline V2.2.2 → pengembangan geografis/polygon → linkage APBD/RUP/PBJ → historical tracking → benchmark harga → analisis anomali berbantuan AI → public audit trail.
-
-Data anomali hanya merupakan sinyal untuk ditinjau, bukan bukti pelanggaran.
+### Struktur stabil
+`index.html`, `styles.css`, `app.js`, `data/public-data.json`, `data/source_catalog.json`, `data/regions.json`, `scripts/validate.py`, `scripts/auto_sync.py`, `scripts/collector.py`, `README.md`, dan `INSTALL.txt` tetap memakai nama file stabil. Nomor release disimpan di metadata internal.

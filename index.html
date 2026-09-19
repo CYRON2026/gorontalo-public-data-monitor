@@ -1,65 +1,22 @@
-<!doctype html>
-<html lang="id">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080808"><title>Gorontalo Public Data Monitor</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-<header class="hero"><div class="wrap">
-<div class="eyebrow">GORONTALO PUBLIC DATA MONITOR</div><h1>Data Publik Gorontalo</h1>
-<p>Dashboard publik berbasis snapshot data resmi Gorontalo: APBD, TKDD, Open Data, BPS, dan sumber pengadaan.</p>
-<div class="hero-actions"><span class="pill">REAL PUBLIC DATA</span><span class="pill">2026 UPDATE</span><span class="pill">SOURCE-TRACEABLE</span></div>
-</div></header>
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080808"><title>Data Publik Gorontalo</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><link rel="stylesheet" href="./styles.css"></head><body>
+<header class="hero"><div class="wrap"><div class="eyebrow">GORONTALO PUBLIC DATA MONITOR</div><h1>Data Publik Gorontalo</h1><p>Dashboard publik berbasis sumber resmi: APBD, TKDD, Open Data, BPS, pengadaan, dan sekarang hierarchy wilayah administratif.</p><div class="hero-actions"><span class="pill">REAL PUBLIC DATA</span><span class="pill">GEOGRAPHY V3</span><span class="pill">SOURCE-TRACEABLE</span><span id="boundaryStatus" class="pill">BOUNDARY: MEMUAT…</span></div></div></header>
 <main class="wrap">
-<section class="notice"><strong>Snapshot 18 Sep 2026.</strong> Data 2026 yang ditampilkan hanya yang punya sumber publik terverifikasi. APBD-P 2026 ditandai sebagai angka perubahan terbaru yang dilaporkan; gunakan Perda final sebagai record hukum pengendali jika sudah tersedia. Bukan live-sync.</section>
-
+<section class="notice"><strong>Snapshot 18 Sep 2026.</strong> Data fiskal tetap mengikuti snapshot terverifikasi V2. V3 menambahkan struktur geografis dan polygon administratif. Polygon desa/kelurahan dimuat dari service publik 2025; jika service tidak tersedia, aplikasi tidak membuat geometri pengganti.</section>
 <section class="controls card">
 <div class="field"><label>Tahun</label><select id="year"><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2022">2022</option></select></div>
 <div class="field"><label>Fokus</label><select id="focus"><option value="apbd">APBD Provinsi</option><option value="tkdd">TKDD Kabupaten/Kota</option><option value="latest">Indikator terbaru</option></select></div>
+<div class="field"><label>Level Peta</label><select id="level"><option value="provinsi">Provinsi</option><option value="kabupaten_kota">Kabupaten/Kota</option><option value="kecamatan">Kecamatan</option><option value="desa">Desa/Kelurahan</option></select></div>
 <div class="field"><label>Wilayah</label><select id="region"><option value="all">Semua wilayah</option></select></div>
-<div class="field grow"><label>Cari</label><input id="search" placeholder="Cari wilayah atau indikator..."></div>
-<button id="download" class="btn">Export JSON</button><button id="reset" class="btn secondary">Reset</button>
-</section>
-
-<section class="kpis">
-<div class="kpi card"><span>APBD 2026 — Pendapatan Awal</span><b id="kpiRevenue">—</b><small>Perda 8/2025</small></div>
-<div class="kpi card"><span>APBD 2026 — Belanja Awal</span><b id="kpiExpense">—</b><small>Perda 8/2025</small></div>
-<div class="kpi card"><span>APBD-P 2026 — Belanja Terbaru</span><b id="kpiExpenseChange">—</b><small>laporan perubahan terbaru</small></div>
-<div class="kpi card"><span>APBD 2025 — Realisasi Belanja</span><b id="kpi2025Real">—</b><small id="kpi2025Pct">—</small></div>
-</section>
-<section class="kpis">
-<div class="kpi card"><span>TKDD 2024 — 6 Kab/Kota</span><b id="kpiTkdd">—</b><small id="kpiTkddPct">—</small></div>
-<div class="kpi card"><span>TKDD Provinsi 2024</span><b id="kpiProvTkdd">—</b><small id="kpiProvTkddPct">—</small></div>
-<div class="kpi card"><span>Dataset Open Data</span><b id="kpiDatasets">—</b><small>snapshot katalog 2026</small></div>
-<div class="kpi card"><span>Wilayah TKDD</span><b>6 + Prov.</b><small>snapshot 2024</small></div>
-</section>
-
-<section class="grid-2">
-<div class="card map-card"><div class="section-head"><div><h2>Peta Kabupaten/Kota</h2><p>Peta masih memakai titik pusat. Polygon administrasi asli akan ditambahkan pada pengembangan berikutnya.</p></div><span class="tag">MAP</span></div><div id="map"></div></div>
-<div class="card"><div class="section-head"><div><h2>Ringkasan Data</h2><p id="summarySubtitle">APBD 2026.</p></div><span class="tag">DATA</span></div><div id="summary" class="summary"></div></div>
-</section>
-
-<section class="card"><div class="section-head"><div><h2>APBD Provinsi — Multi-Tahun</h2><p>Nilai dalam rupiah/miliar. Angka 2026 awal berasal dari Perda 8/2025; perubahan terbaru diberi status terpisah.</p></div><span class="tag">FISCAL</span></div>
-<div class="table-wrap"><table><thead><tr><th>Tahun</th><th>Indikator</th><th>Anggaran/Target</th><th>Realisasi/Perubahan</th><th>%</th><th>Status</th></tr></thead><tbody id="apbdBody"></tbody></table></div></section>
-
-<section class="card"><div class="section-head"><div><h2>TKDD Kabupaten/Kota 2024</h2><p>Agregat dihitung dari TOTAL TKDD enam halaman DJPK, bukan penjumlahan akun anak.</p></div><span class="tag">DJPK</span></div>
-<div class="table-wrap"><table><thead><tr><th>Wilayah</th><th>Anggaran</th><th>Realisasi</th><th>%</th><th>Sumber</th></tr></thead><tbody id="districtBody"></tbody></table></div></section>
-
-<section class="grid-2">
-<div class="card"><div class="section-head"><div><h2>Indikator Publik Terbaru</h2><p>Data yang ditampilkan di portal Open Data Gorontalo saat snapshot.</p></div><span class="tag">2026</span></div><div id="latestIndicators" class="indicator-list"></div></div>
-<div class="card"><div class="section-head"><div><h2>Pengadaan / LKPP</h2><p>Sumber sudah terhubung, tetapi paket belum diimpor agar tidak membuat record fiktif.</p></div><span class="tag amber">SOURCE READY</span></div><div class="source-status"><b>Belum ada package-level record pada snapshot ini.</b><p>PTPEP menjelaskan bahwa dashboard memakai SiRUP dan SPSE; sebagian pengadaan langsung/penunjukan langsung dapat belum diumumkan di SiRUP dan data sedang menyesuaikan nomenklatur.</p><a class="source-link" target="_blank" rel="noopener" href="https://ptpep.lkpp.go.id/laporan/dashboard-klpd">Buka LKPP/PTPEP ↗</a></div></div>
-</section>
-
-<section class="card"><div class="section-head"><div><h2>Coverage & Keterbatasan</h2><p>Supaya dashboard tidak memberi kesan data sudah lengkap padahal belum.</p></div><span class="tag">COVERAGE</span></div><div id="coverage" class="coverage-grid"></div></section>
-
-<section class="card"><div class="section-head"><div><h2>Source Catalog & Audit Lineage</h2><p>Setiap angka harus bisa ditelusuri ke sumber publiknya.</p></div><span class="tag">TRACE</span></div>
-<div class="lineage"><div>Dashboard</div><i>→</i><div>Analysis</div><i>→</i><div>Record</div><i>→</i><div>Dataset</div><i>→</i><div>Dokumen</div><i>→</i><div>Sumber</div></div><div id="sources" class="source-grid"></div></section>
-
-<section class="card"><div class="section-head"><div><h2>Roadmap</h2><p>Snapshot publik memuat data dan fondasi lineage yang tersedia.</p></div></div><div class="roadmap-grid">
-<div class="done">V1<br><small>Prototype</small></div><div class="done">V1.1<br><small>Responsive + map</small></div><div class="done">V2<br><small>Real public data</small></div><div class="active">Early Maturity<br><small>Data publik + lineage</small></div><div>V3<br><small>Boundaries + hierarchy</small></div><div>V4<br><small>APBD ↔ RUP ↔ PBJ ↔ Vendor</small></div><div>V5<br><small>Historical</small></div><div>V6<br><small>Benchmark</small></div><div>V7<br><small>Anomaly engine</small></div><div>V8<br><small>Audit trail</small></div>
-</div></section>
-</main>
-<footer class="wrap footer"><p>Gorontalo Public Data Monitor — public-data analysis project. Anomaly ≠ corruption; angka tanpa sumber tidak ditampilkan sebagai fakta.</p><p>Snapshot: 18 September 2026.</p></footer>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="./app.js"></script>
-</body></html>
+<div class="field grow"><label>Cari</label><input id="search" placeholder="Cari wilayah atau indikator…"></div><button id="download" class="btn">Export JSON</button><button id="reset" class="btn secondary">Reset</button></section>
+<div id="mapError" class="map-error hidden"></div>
+<section class="kpis"><div class="kpi card"><span>APBD 2026 — Pendapatan Awal</span><b id="kpiRevenue">—</b><small>Perda 8/2025</small></div><div class="kpi card"><span>APBD 2026 — Belanja Awal</span><b id="kpiExpense">—</b><small>Perda 8/2025</small></div><div class="kpi card"><span>APBD-P 2026 — Belanja Terbaru</span><b id="kpiExpenseChange">—</b><small>laporan perubahan terbaru</small></div><div class="kpi card"><span>APBD 2025 — Realisasi Belanja</span><b id="kpi2025Real">—</b><small id="kpi2025Pct">—</small></div></section>
+<section class="kpis"><div class="kpi card"><span>TKDD 2024 — 6 Kab/Kota</span><b id="kpiTkdd">—</b><small id="kpiTkddPct">—</small></div><div class="kpi card"><span>TKDD Provinsi 2024</span><b id="kpiProvTkdd">—</b><small id="kpiProvTkddPct">—</small></div><div class="kpi card"><span>Dataset Open Data</span><b id="kpiDatasets">—</b><small>snapshot katalog 2026</small></div><div class="kpi card"><span>Hierarchy</span><b>6 / 77 / 732</b><small>Kab/Kota · Kecamatan · Desa/kelurahan</small></div></section>
+<section class="grid-2"><div class="card map-card"><div class="section-head"><div><h2>Peta Administratif</h2><p id="mapSubtitle">Polygon desa/kelurahan 2025 dikelompokkan sesuai level yang dipilih.</p></div><span class="tag">MAP</span></div><div id="breadcrumbs" class="breadcrumbs"></div><div id="map"></div><div id="mapLegend" class="map-legend"></div></div><div class="card"><div class="section-head"><div><h2>Ringkasan Data</h2><p id="summarySubtitle">APBD 2026.</p></div><span class="tag">DATA</span></div><div id="summary" class="summary"></div><div class="geography-note"><b>Scope geografis</b><p id="scopeNote">V3 tidak menyalin angka provinsi/kabupaten ke desa. Data finansial hanya tampil pada level yang didukung sumbernya.</p></div></div></section>
+<section class="card"><div class="section-head"><div><h2>Hierarchy Wilayah</h2><p>Struktur administratif berasal dari Master File Desa BPS 2025. Jumlah desa/kelurahan adalah ekspektasi struktur; detail nama/polygon desa dimuat dari service boundary.</p></div><span class="tag">HIERARCHY</span></div><div id="hierarchy" class="hierarchy"></div></section>
+<section class="card"><div class="section-head"><div><h2>APBD Provinsi — Multi-Tahun</h2><p>Nilai dalam rupiah/miliar. V3 tidak mengubah angka fiskal V2.</p></div><span class="tag">FISCAL</span></div><div class="table-wrap"><table><thead><tr><th>Tahun</th><th>Indikator</th><th>Anggaran/Target</th><th>Realisasi/Perubahan</th><th>%</th><th>Status</th></tr></thead><tbody id="apbdBody"></tbody></table></div></section>
+<section class="card"><div class="section-head"><div><h2>TKDD Kabupaten/Kota 2024</h2><p>Agregat dihitung dari TOTAL TKDD enam halaman DJPK, bukan penjumlahan akun anak.</p></div><span class="tag">DJPK</span></div><div class="table-wrap"><table><thead><tr><th>Wilayah</th><th>Anggaran</th><th>Realisasi</th><th>%</th><th>Sumber</th></tr></thead><tbody id="districtBody"></tbody></table></div></section>
+<section class="grid-2"><div class="card"><div class="section-head"><div><h2>Indikator Publik Terbaru</h2><p>Snapshot Open Data Gorontalo.</p></div><span class="tag">2026</span></div><div id="latestIndicators" class="indicator-list"></div></div><div class="card"><div class="section-head"><div><h2>Pengadaan / LKPP</h2><p>Sumber sudah terhubung; package-level record belum diimpor agar tidak membuat data fiktif.</p></div><span class="tag amber">SOURCE READY</span></div><div class="source-status"><b>Belum ada package-level record pada snapshot ini.</b><p>PTPEP menjelaskan dashboard memakai SiRUP dan SPSE; sebagian pengadaan langsung/penunjukan langsung dapat belum diumumkan di SiRUP.</p><a class="source-link" target="_blank" rel="noopener" href="https://ptpep.lkpp.go.id/laporan/dashboard-klpd">Buka LKPP/PTPEP ↗</a></div></div></section>
+<section class="card"><div class="section-head"><div><h2>Coverage & Keterbatasan</h2><p>Transparan terhadap data yang tersedia dan yang belum.</p></div><span class="tag">COVERAGE</span></div><div id="coverage" class="coverage-grid"></div></section>
+<section class="card"><div class="section-head"><div><h2>Source Catalog & Audit Lineage</h2><p>Setiap angka penting harus bisa ditelusuri ke sumber publiknya.</p></div><span class="tag">TRACE</span></div><div class="lineage"><div>Dashboard</div><i>→</i><div>Analysis</div><i>→</i><div>Record</div><i>→</i><div>Dataset</div><i>→</i><div>Dokumen</div><i>→</i><div>Sumber</div></div><div id="sources" class="source-grid"></div></section>
+<section class="card"><div class="section-head"><div><h2>Roadmap</h2><p>V3 menyelesaikan fondasi geografis sebelum linkage procurement dan analitik lanjutan.</p></div></div><div class="roadmap-grid"><div class="done">V1<br><small>Prototype</small></div><div class="done">V1.1<br><small>Responsive + map</small></div><div class="done">V2<br><small>Real public data</small></div><div class="done">Early Maturity<br><small>Data publik + lineage</small></div><div class="active">V3<br><small>Boundaries + hierarchy</small></div><div>V4<br><small>APBD ↔ RUP ↔ PBJ ↔ Vendor</small></div><div>V5<br><small>Historical</small></div><div>V6<br><small>Benchmark</small></div><div>V7<br><small>Anomaly engine</small></div><div>V8<br><small>Audit trail</small></div></div></section>
+</main><footer class="wrap footer"><p>Gorontalo Public Data Monitor — public-data analysis project. Anomaly ≠ corruption; angka tanpa sumber tidak ditampilkan sebagai fakta.</p><p>Geography reference: BPS Master File Desa 2025 · boundary service: 2025 update.</p></footer><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="./app.js"></script></body></html>
