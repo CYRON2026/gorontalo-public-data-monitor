@@ -6,11 +6,12 @@ OUT=ROOT/"data/auto_sync_status.json"
 SOURCES={
   "open_data_home":"https://opendata.gorontaloprov.go.id/",
   "djpk_apbd_2026":"https://djpk.kemenkeu.go.id/portal/data/apbd?pemda=00&provinsi=30&tahun=2026",
+  "boundary_service":"https://geoportal.pertanian.go.id/arcgis/rest/services/Hosted/Batas_Administrasi_Desa/FeatureServer/0",
 }
 status={"checked_at":datetime.datetime.now(datetime.timezone.utc).isoformat(),"results":{}}
 for name,url in SOURCES.items():
     try:
-        req=urllib.request.Request(url,headers={"User-Agent":"Gorontalo-Public-Data-Monitor/2.2"})
+        req=urllib.request.Request(url,headers={"User-Agent":"Gorontalo-Public-Data-Monitor/3.0"})
         with urllib.request.urlopen(req,timeout=25) as r:
             body=r.read().decode("utf-8","ignore")
         status["results"][name]={"ok":True,"http_status":200,"bytes":len(body)}
