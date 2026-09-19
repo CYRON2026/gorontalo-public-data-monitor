@@ -7,9 +7,11 @@
     "note": "Data are snapshots from official public sources. They are not live synchronization. Current-year realization is shown only when a source provides it.",
     "auto_sync": "enabled_architecture_safe_mode",
     "auto_sync_note": "GitHub Actions can periodically refresh sources. Failed source fetches do not overwrite verified snapshot data.",
-    "release": "2.2.2",
+    "release": "3.0.0",
     "public_title": "Data Publik Gorontalo",
-    "filename": "public-data.json"
+    "filename": "public-data.json",
+    "schema_version": "3.0",
+    "release_note": "V3 geographic hierarchy + administrative boundary integration; fiscal snapshot retained from V2."
   },
   "province": {
     "id": "75",
@@ -232,7 +234,10 @@
       "realization_pct": 95.81,
       "lat": 0.4778,
       "lng": 122.1224,
-      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=01&provinsi=30&tahun=2024"
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=01&provinsi=30&tahun=2024",
+      "bps_code": "7501",
+      "geographic_scope": "kabupaten_kota",
+      "direct_or_aggregated": "direct source total TKDD 2024"
     },
     {
       "id": "75.02",
@@ -243,7 +248,10 @@
       "realization_pct": 97.36,
       "lat": 0.6012,
       "lng": 122.9987,
-      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=02&provinsi=30&tahun=2024"
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=02&provinsi=30&tahun=2024",
+      "bps_code": "7502",
+      "geographic_scope": "kabupaten_kota",
+      "direct_or_aggregated": "direct source total TKDD 2024"
     },
     {
       "id": "75.71",
@@ -254,10 +262,13 @@
       "realization_pct": 98.69,
       "lat": 0.5435,
       "lng": 123.0568,
-      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=03&provinsi=30&tahun=2024"
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=03&provinsi=30&tahun=2024",
+      "bps_code": "7571",
+      "geographic_scope": "kabupaten_kota",
+      "direct_or_aggregated": "direct source total TKDD 2024"
     },
     {
-      "id": "75.04",
+      "id": "75.03",
       "name": "Kab. Pohuwato",
       "level": "kabupaten",
       "budget_million": 844.14,
@@ -265,10 +276,13 @@
       "realization_pct": 97.43,
       "lat": 0.4494,
       "lng": 121.9392,
-      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=04&provinsi=30&tahun=2024"
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=04&provinsi=30&tahun=2024",
+      "bps_code": "7503",
+      "geographic_scope": "kabupaten_kota",
+      "direct_or_aggregated": "direct source total TKDD 2024"
     },
     {
-      "id": "75.05",
+      "id": "75.04",
       "name": "Kab. Bone Bolango",
       "level": "kabupaten",
       "budget_million": 838.26,
@@ -276,10 +290,13 @@
       "realization_pct": 97.54,
       "lat": 0.5394,
       "lng": 123.1765,
-      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=05&provinsi=30&tahun=2024"
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=05&provinsi=30&tahun=2024",
+      "bps_code": "7504",
+      "geographic_scope": "kabupaten_kota",
+      "direct_or_aggregated": "direct source total TKDD 2024"
     },
     {
-      "id": "75.06",
+      "id": "75.05",
       "name": "Kab. Gorontalo Utara",
       "level": "kabupaten",
       "budget_million": 681.09,
@@ -287,7 +304,10 @@
       "realization_pct": 97.28,
       "lat": 0.8295,
       "lng": 122.998,
-      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=06&provinsi=30&tahun=2024"
+      "source": "https://djpk.kemenkeu.go.id/portal/data/tkdd?pemda=06&provinsi=30&tahun=2024",
+      "bps_code": "7505",
+      "geographic_scope": "kabupaten_kota",
+      "direct_or_aggregated": "direct source total TKDD 2024"
     }
   ],
   "aggregates": {
@@ -388,7 +408,17 @@
     "name": "Master File Desa Provinsi Gorontalo 2025",
     "release": "2026-03-31",
     "revision": "2026-09-16",
-    "source": "https://gorontalo.bps.go.id/id/publication/2026/03/31/fff77cc651cc3a5df7ba7dbd/master-file-desa-provinsi-gorontalo-2025.html"
+    "source": "https://gorontalo.bps.go.id/id/publication/2026/03/31/fff77cc651cc3a5df7ba7dbd/master-file-desa-provinsi-gorontalo-2025.html",
+    "boundary_dataset": {
+      "provider": "Geoportal Kementerian Pertanian / BIG boundary data",
+      "dataset": "Batas Administrasi Desa/Kelurahan — Semester 1 2025",
+      "service_url": "https://geoportal.pertanian.go.id/arcgis/rest/services/Hosted/Batas_Administrasi_Desa/FeatureServer/0",
+      "query_url": "https://geoportal.pertanian.go.id/arcgis/rest/services/Hosted/Batas_Administrasi_Desa/FeatureServer/0/query",
+      "where": "kdppum='75'",
+      "format": "geojson",
+      "out_fields": "namobj,kdbbps,kdcbps,kdebps,kdppum,kdpkab,kdcpum,kdepum,wadmkc,wadmkd,wadmkk,wadmpr,tipadm,luaswh,uupp",
+      "note": "Higher-level map views group the 2025 village/kelurahan polygons by their parent administrative codes instead of inventing separate geometry."
+    }
   },
   "procurement": {
     "status": "source_ready_package_level_not_yet_imported",
@@ -438,9 +468,14 @@
       "source": "LKPP PTPEP"
     },
     {
-      "area": "Real administrative polygons",
-      "status": "V3",
-      "source": "BPS + boundary dataset to be integrated"
+      "area": "Administrative hierarchy",
+      "status": "available: province + 6 kab/kota + 77 kecamatan; village/kelurahan features loaded from 2025 boundary service",
+      "source": "BPS MFD 2025 + official boundary feature service"
+    },
+    {
+      "area": "Administrative polygons",
+      "status": "available from 2025 village/kelurahan boundary service; grouped for higher levels",
+      "source": "https://geoportal.pertanian.go.id/arcgis/rest/services/Hosted/Batas_Administrasi_Desa/FeatureServer/0/query"
     }
   ],
   "sources": [

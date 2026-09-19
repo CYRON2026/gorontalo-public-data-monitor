@@ -4,7 +4,7 @@
     "name": "Open Data Gorontalo",
     "url": "https://opendata.gorontaloprov.go.id/",
     "type": "public source",
-    "checked_at": "2026-09-18T16:37:56.038077+00:00",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
     "status": "cataloged",
     "notes": "Katalog dataset daerah dan data publik perangkat daerah."
   },
@@ -13,7 +13,7 @@
     "name": "DJPK / SIKD APBD",
     "url": "https://djpk.kemenkeu.go.id/portal/data/apbd",
     "type": "public source",
-    "checked_at": "2026-09-18T16:37:56.038077+00:00",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
     "status": "cataloged",
     "notes": "Data APBD dan realisasi."
   },
@@ -22,7 +22,7 @@
     "name": "DJPK / SIKD TKDD",
     "url": "https://djpk.kemenkeu.go.id/portal/data/tkdd",
     "type": "public source",
-    "checked_at": "2026-09-18T16:37:56.038077+00:00",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
     "status": "cataloged",
     "notes": "Data transfer ke daerah."
   },
@@ -31,7 +31,7 @@
     "name": "LKPP / PTPEP",
     "url": "https://ptpep.lkpp.go.id/laporan/dashboard-klpd",
     "type": "public source",
-    "checked_at": "2026-09-18T16:37:56.038077+00:00",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
     "status": "cataloged",
     "notes": "Sumber data pengadaan publik; package-level belum diimpor pada V2.2."
   },
@@ -40,7 +40,7 @@
     "name": "BPS Provinsi Gorontalo",
     "url": "https://gorontalo.bps.go.id/",
     "type": "public source",
-    "checked_at": "2026-09-18T16:37:56.038077+00:00",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
     "status": "cataloged",
     "notes": "Statistik dan referensi wilayah administratif."
   },
@@ -49,7 +49,7 @@
     "name": "JDIH BPK",
     "url": "https://peraturan.bpk.go.id/",
     "type": "public source",
-    "checked_at": "2026-09-18T16:37:56.038077+00:00",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
     "status": "cataloged",
     "notes": "Peraturan dan dokumen hukum publik."
   },
@@ -58,7 +58,7 @@
     "name": "JDIH Provinsi Gorontalo",
     "url": "https://jdih.gorontaloprov.go.id/",
     "type": "public source",
-    "checked_at": "2026-09-18T16:37:56.038077+00:00",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
     "status": "cataloged",
     "notes": "Peraturan dan dokumen hukum daerah."
   },
@@ -67,8 +67,26 @@
     "name": "DJPb Kanwil Gorontalo",
     "url": "https://djpb.kemenkeu.go.id/kanwil/gorontalo/",
     "type": "public source",
-    "checked_at": "2026-09-18T16:37:56.038077+00:00",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
     "status": "cataloged",
     "notes": "Publikasi fiskal regional dan konteks konsolidasi APBD."
+  },
+  {
+    "id": "bps-master-file-desa-gorontalo-2025",
+    "name": "BPS Master File Desa Gorontalo 2025",
+    "url": "https://gorontalo.bps.go.id/id/publication/2026/03/31/fff77cc651cc3a5df7ba7dbd/master-file-desa-provinsi-gorontalo-2025.html",
+    "type": "public source",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
+    "status": "cataloged",
+    "notes": "Referensi hierarchy kode/nama wilayah; revisi 16 September 2026."
+  },
+  {
+    "id": "boundary-service-desa-kelurahan-2025",
+    "name": "Boundary Service Desa/Kelurahan 2025",
+    "url": "https://geoportal.pertanian.go.id/arcgis/rest/services/Hosted/Batas_Administrasi_Desa/FeatureServer/0",
+    "type": "public source",
+    "checked_at": "2026-09-19T14:53:27.410065+00:00",
+    "status": "cataloged",
+    "notes": "Feature service polygon administrasi desa/kelurahan Semester 1 2025; digunakan oleh V3."
   }
 ]
